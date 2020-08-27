@@ -1,1 +1,0 @@
-var joobleRestAPIKey = "8b73666c-a465-468c-8234-a431724094ba" // Until it's reviewed, we are limited to 500 requests. NOT REVIEWED YET!
