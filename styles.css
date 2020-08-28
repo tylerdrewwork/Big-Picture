@@ -5,12 +5,12 @@ body {
 }
 
 #top-row {
-    background-color: #40c4ff ;
+    background-color: #cfd8dc;
     font-size: 40px;
 }
 
 #graph-row {
-    background-color: #40c4ff ;
+    background-color: #cfd8dc ;
    
     font-size: 40px;
     text-align: center;
@@ -24,7 +24,7 @@ body {
 
 
 #job-listing-row {
-    background-color: #40c4ff ;
+    background-color: #cfd8dc ;
  
     font-size: 40px;
     text-align: center;
