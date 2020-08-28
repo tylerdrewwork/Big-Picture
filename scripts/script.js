@@ -10,7 +10,7 @@ var jobDataForChart = [];
 function makeAdzunaQuery(){
     // Query Parameters
     // TODO make these grab from inputs on the html
-    let keywordTitle = "Javascript"; // Keyword to search for in the Title.
+    let keywordTitle = ""; // Keyword to search for in the Title.
     let keywordAny = "" // Keyword to search for in any part of the Job Posting.
     let countryCode = "us"; // Country Code is the 2 letter code for the country to search in
     let resultsPerPage = 10; // Default 10. Results to display from a query.
