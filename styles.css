@@ -1,0 +1,35 @@
+body {
+    background-color:#90a4ae;
+    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+#top-row {
+    background-color: #cfd8dc;
+    font-size: 40px;
+}
+
+#graph-row {
+    background-color: #cfd8dc ;
+   
+    font-size: 40px;
+    text-align: center;
+}
+
+    .scrolling-wrapper {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+
+
+#job-listing-row {
+    background-color: #cfd8dc ;
+ 
+    font-size: 40px;
+    text-align: center;
+}
+
+.main-content {
+    display: inline-block;
+}
