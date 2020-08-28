@@ -1,7 +1,11 @@
 // Overall TODO ::
 // - Let user filter by location (city, state) instead of just country
+// - Let user save jobs to localstorage
+// Chart Analysis TODO ::
+// remove html tags from titles for accurate analylsis
 
 var currentAdzunaResponse = {};
+var jobDataForChart = [];
 
 function makeAdzunaQuery(){
     // Query Parameters
@@ -17,7 +21,26 @@ function makeAdzunaQuery(){
         url: URL,
         method: "GET"
     }).then(function(response) {
+        // For each response, construct a new object from template and then push it to the job data array
         console.log("Adzuna Response: ", response);
+        let newObject;
+        for(let i = 0; i < response.results.length; i++) {
+            newObject = {
+                ...jobObjectTemplate // Clone the template
+            }
+            newObject.title = response.results[i].title;
+            newObject.description = response.results[i].description;
+            newObject.category = response.results[i].category.label;
+            newObject.company = response.results[i].company.display_name;
+            newObject.country = response.results[i].location.area[0];
+            newObject.state = response.results[i].location.area[1];
+            newObject.city = response.results[i].location.area[2];
+            newObject.created = response.results[i].created;
+            newObject.postingURL = response.results[i].redirect_url;
+            newObject.salary = response.results[i].salary_is_predicted;
+            // Push this awesome new object to job data!
+            jobDataForChart.push(newObject);
+        }
     });
 }
 
