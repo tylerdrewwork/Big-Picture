@@ -16,4 +16,4 @@
 
 ## Execution:
 
-### Things I learned
+### Things We learned

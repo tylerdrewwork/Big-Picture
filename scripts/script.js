@@ -7,6 +7,8 @@
 var currentAdzunaResponse = {};
 var jobDataForChart = [];
 
+// ANCHOR Queries 🤔
+
 function makeAdzunaQuery(){
     // Query Parameters
     // TODO make these grab from inputs on the html
@@ -42,6 +44,16 @@ function makeAdzunaQuery(){
             jobDataForChart.push(newObject);
         }
     });
+}
+
+// ANCHOR Analytical Functions to return information
+
+/**
+ * @desc Gets the most recurring value of "key" throughout the list of job data.
+ * @example getModeOfKey(title) will get the most recurring titles throughout the job data. 
+ */
+function getModeOfKey(key) {
+
 }
 
 makeAdzunaQuery();
