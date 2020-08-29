@@ -9,15 +9,21 @@ var jobDataForChart = [];
 
 // ANCHOR Queries 🤔
 
-function makeAdzunaQuery(){
-    // Query Parameters
+// These weird comments below are JS Docs. If you hover over makeAdzunaQuery you can see that they help describe these functions in depth
+/**
+ * @param {string} countryCode - 2 letter code for the country to search in
+ * @param {number} resultsToAnalyze - Default 10. Results to display from a query.
+ * @param {string} title - Title Keyword to searh for
+ * @param {string} keywords - Keywords to search for in any part of the Job Posting. Separated with spaces. Equals "" if null.
+ */
+function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
     // TODO make these grab from inputs on the html
-    let keywordTitle = ""; // Keyword to search for in the Title.
-    let keywordAny = "" // Keyword to search for in any part of the Job Posting.
-    let countryCode = "us"; // Country Code is the 2 letter code for the country to search in
-    let resultsPerPage = 10; // Default 10. Results to display from a query.
+    if(keywords === undefined) {
+        // If keywords is undefined, set it to "" so it doesn't break the query
+        keywords = "";
+    }
     let URL = "https://api.adzuna.com/v1/api/jobs/" + countryCode + "/search/1?app_id=" + adzunaAppID + "&app_key=" + adzunaAPIKey + 
-        "&results_per_page=" + resultsPerPage + "&what=" + keywordAny + "&title_only=" + keywordTitle;
+        "&results_per_page=" + resultsToAnalyze + "&what=" + keywords + "&title_only=" + title;
 
     $.ajax({
         url: URL,
@@ -43,6 +49,7 @@ function makeAdzunaQuery(){
             // Push this awesome new object to job data!
             jobDataForChart.push(newObject);
         }
+        getModeOfKey('title'); // TODO Tyler remove after done testing
     });
 }
 
@@ -50,10 +57,25 @@ function makeAdzunaQuery(){
 
 /**
  * @desc Gets the most recurring value of "key" throughout the list of job data.
- * @example getModeOfKey(title) will get the most recurring titles throughout the job data. 
+ * @example getModeOfKey('title'); // will get the most recurring titles throughout the job data. 
  */
 function getModeOfKey(key) {
+    /* tylers Pseudo code
+    1. add all of the keys to an array
+    2. look through the array and see which is most common
+    3. return that key
+    */
+   
+    let mode;
+    let keyMapping = {};
+    for (let i = 0; i < jobDataForChart.length; i++) {
+        
+    }
 
+    
+    // console.log(jobDataForChart[0][key]);
+    return mode;
 }
 
-makeAdzunaQuery();
+makeAdzunaQuery("us", 10, "javascript");
+
