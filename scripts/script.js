@@ -29,27 +29,42 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
         url: URL,
         method: "GET"
     }).then(function(response) {
-        // For each response, construct a new object from template and then push it to the job data array
         console.log("Adzuna Response: ", response);
+        
+        // Make sure there are no identical jobs in the responses
+        let foundAdrefs = [];
+        let responsesToAdd = [];
+        for (let i = 0; i < response.results.length; i++) {
+            if(foundAdrefs.includes(response.results[i].adref)) {
+                continue;
+            } else {
+                foundAdrefs.push(response.results[i].adref);
+                responsesToAdd.push(response.results[i]);
+            }
+        }
+        console.log(responsesToAdd);
+
+        // For each response, construct a new object from template and then push it to the job data array
         let newObject;
-        for(let i = 0; i < response.results.length; i++) {
+        for(let i = 0; i < responsesToAdd.length; i++) {
             newObject = {
                 ...jobObjectTemplate // Clone the template
             }
-            newObject.title = response.results[i].title;
-            newObject.description = response.results[i].description;
-            newObject.category = response.results[i].category.label;
-            newObject.company = response.results[i].company.display_name;
-            newObject.country = response.results[i].location.area[0];
-            newObject.state = response.results[i].location.area[1];
-            newObject.city = response.results[i].location.area[2];
-            newObject.created = response.results[i].created;
-            newObject.postingURL = response.results[i].redirect_url;
-            newObject.salary = response.results[i].salary_is_predicted;
+            newObject.title = responsesToAdd[i].title;
+            newObject.description = responsesToAdd[i].description;
+            newObject.category = responsesToAdd[i].category.label;
+            newObject.company = responsesToAdd[i].company.display_name;
+            newObject.country = responsesToAdd[i].location.area[0];
+            newObject.state = responsesToAdd[i].location.area[1];
+            newObject.city = responsesToAdd[i].location.area[2];
+            newObject.created = responsesToAdd[i].created;
+            newObject.postingURL = responsesToAdd[i].redirect_url;
+            newObject.salary = responsesToAdd[i].salary_is_predicted;
             // Push this awesome new object to job data!
             jobDataForChart.push(newObject);
         }
-        getModeOfKey('title'); // TODO Tyler remove after done testing
+
+        getModeOfProperty('title'); // TODO Tyler remove after done testing
     });
 }
 
@@ -59,23 +74,39 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
  * @desc Gets the most recurring value of "key" throughout the list of job data.
  * @example getModeOfKey('title'); // will get the most recurring titles throughout the job data. 
  */
-function getModeOfKey(key) {
+function getModeOfProperty(property) {
     /* tylers Pseudo code
     1. add all of the keys to an array
     2. look through the array and see which is most common
     3. return that key
     */
    
-    let mode;
-    let keyMapping = {};
+    let mode = "";
+    let greatestFreq = 0;
+    let keyMapping = {}; // This records the frequency of the key
+    
+    // Get the frequency of keys in job data
     for (let i = 0; i < jobDataForChart.length; i++) {
-        
+        let thisKeyValueFrequency = jobDataForChart[i][property]; // The keys index, and its frequency
+
+        // If the current key doesn't exist in the keymap yet, declare it with the value 0.
+        if(keyMapping[thisKeyValueFrequency] === undefined) {
+            keyMapping[thisKeyValueFrequency] = 0; 
+        }
+        keyMapping[thisKeyValueFrequency] ++;
     }
 
+    // Get the highest frequency
+    for (let element in keyMapping) {
+        if (keyMapping[element] > greatestFreq) {
+            greatestFreq = keyMapping[element];
+            mode = element;
+        }
+    }
     
-    // console.log(jobDataForChart[0][key]);
+    console.log("Mode: ", mode, " || this keyMap: ", keyMapping);
     return mode;
 }
 
-makeAdzunaQuery("us", 10, "javascript");
+makeAdzunaQuery("us", 25, "developer");
 
