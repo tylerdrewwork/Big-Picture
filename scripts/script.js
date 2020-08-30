@@ -83,6 +83,7 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
         }
         console.log("Job Data For Chart: ", jobDataForChart);
         getModeOfProperty('city'); // TODO Tyler remove after done testing
+        makeChart();
     });
 }
 
@@ -127,5 +128,5 @@ function getModeOfProperty(property) {
     }
 }
 
-makeAdzunaQuery("us", 10, "engineer");
+makeAdzunaQuery("us", 100, "engineer");
 
