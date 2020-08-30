@@ -5,7 +5,10 @@
 // remove html tags from titles for accurate analylsis
 
 var currentAdzunaResponse = {};
-var jobDataForChart = [];
+
+// Chamber's Data
+var jobDataForChart = []; // Contains all of the "jobObjectTemplate" objects that have all the revised data for charts
+var propertyModesForChart = {}; // Contains the frequency of all of the jobData returned by Adzuna response
 
 // ANCHOR Queries 🤔
 
@@ -13,14 +16,15 @@ var jobDataForChart = [];
 /**
  * @param {string} countryCode - 2 letter code for the country to search in
  * @param {number} resultsToAnalyze - Default 10. Results to display from a query.
- * @param {string} title - Title Keyword to searh for
+ * @param {string} title - Title Keyword to search for
  * @param {string} keywords - Keywords to search for in any part of the Job Posting. Separated with spaces. Equals "" if null.
  */
+
+makeAdzunaQuery("us", 10, "engineer");
 function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
     // TODO make these grab from inputs on the html
     if(keywords === undefined) {
-        // If keywords is undefined, set it to "" so it doesn't break the query
-        keywords = "";
+        keywords = ""; // If keywords is undefined, set it to "" so it doesn't break the query
     }
     let URL = "https://api.adzuna.com/v1/api/jobs/" + countryCode + "/search/1?app_id=" + adzunaAppID + "&app_key=" + adzunaAPIKey + 
         "&results_per_page=" + resultsToAnalyze + "&what=" + keywords + "&title_only=" + title;
@@ -31,18 +35,30 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
     }).then(function(response) {
         console.log("Adzuna Response: ", response);
         
-        // Make sure there are no identical jobs in the responses
-        let foundAdrefs = [];
+        // Make sure there are no identical jobs in the responses.
         let responsesToAdd = [];
+        // FIXME tylers broken code for filtering out identical responses
         for (let i = 0; i < response.results.length; i++) {
-            if(foundAdrefs.includes(response.results[i].adref)) {
+            //for (let j = 0; j < responsesToAdd.length; j++) {
+            //    for each response, go through each responsesToAdd
+            //    if(response.results[i].title ===)
+            //}
+            if(!response) {
+                /*
+                If responses has the same title as a job in responses to add,
+                check to see if they have the same company.
+                if so, then stop this iterationn
+                
+                if response.title === responsesToAdd.title
+                {
+                    
+                }
+                */
                 continue;
             } else {
-                foundAdrefs.push(response.results[i].adref);
                 responsesToAdd.push(response.results[i]);
             }
         }
-        console.log(responsesToAdd);
 
         // For each response, construct a new object from template and then push it to the job data array
         let newObject;
@@ -63,8 +79,8 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
             // Push this awesome new object to job data!
             jobDataForChart.push(newObject);
         }
-
-        getModeOfProperty('title'); // TODO Tyler remove after done testing
+        console.log("Job Data For Chart: ", jobDataForChart);
+        getModeOfProperty('city'); // TODO Tyler remove after done testing
     });
 }
 
@@ -83,30 +99,29 @@ function getModeOfProperty(property) {
    
     let mode = "";
     let greatestFreq = 0;
-    let keyMapping = {}; // This records the frequency of the key
+    let propertyMapping = {}; // This records the frequency of the key
     
     // Get the frequency of keys in job data
     for (let i = 0; i < jobDataForChart.length; i++) {
         let thisKeyValueFrequency = jobDataForChart[i][property]; // The keys index, and its frequency
 
         // If the current key doesn't exist in the keymap yet, declare it with the value 0.
-        if(keyMapping[thisKeyValueFrequency] === undefined) {
-            keyMapping[thisKeyValueFrequency] = 0; 
+        if(propertyMapping[thisKeyValueFrequency] === undefined) {
+            propertyMapping[thisKeyValueFrequency] = 0; 
         }
-        keyMapping[thisKeyValueFrequency] ++;
+        propertyMapping[thisKeyValueFrequency] ++;
     }
 
     // Get the highest frequency
-    for (let element in keyMapping) {
-        if (keyMapping[element] > greatestFreq) {
-            greatestFreq = keyMapping[element];
+    for (let element in propertyMapping) {
+        if (propertyMapping[element] > greatestFreq) {
+            greatestFreq = propertyMapping[element];
             mode = element;
         }
     }
     
-    console.log("Mode: ", mode, " || this keyMap: ", keyMapping);
-    return mode;
+    propertyModesForChart = propertyMapping;
 }
 
-makeAdzunaQuery("us", 25, "developer");
+makeAdzunaQuery("us", 10, "engineer");
 
