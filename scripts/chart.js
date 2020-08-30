@@ -1,3 +1,6 @@
+//TO DO:
+// establish a container on line 43 in html
+
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
