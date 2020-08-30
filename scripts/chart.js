@@ -1,8 +1,6 @@
-//TO DO:
-// establish a container on line 43 in html
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
+function makeChart() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -38,3 +36,5 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+}
