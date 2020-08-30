@@ -8,7 +8,10 @@ var currentAdzunaResponse = {};
 
 // Chamber's Data
 var jobDataForChart = []; // Contains all of the "jobObjectTemplate" objects that have all the revised data for charts
-var propertyModesForChart = {}; // Contains the frequency of all of the jobData returned by Adzuna response
+// The following 2 arrays contain the properties and values of the calculated mode of the jobDataForChart. 
+// DONT SORT THESE ARRAYS! They are paired in order (so index 0 on properties is paired with index 0 on values)
+var modePropertiesArray = [];
+var modeValuesArray = [];
 
 // ANCHOR Queries 🤔
 
@@ -20,7 +23,6 @@ var propertyModesForChart = {}; // Contains the frequency of all of the jobData 
  * @param {string} keywords - Keywords to search for in any part of the Job Posting. Separated with spaces. Equals "" if null.
  */
 
-makeAdzunaQuery("us", 10, "engineer");
 function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
     // TODO make these grab from inputs on the html
     if(keywords === undefined) {
@@ -118,9 +120,11 @@ function getModeOfProperty(property) {
             greatestFreq = propertyMapping[element];
             mode = element;
         }
+
+        // Populate both arrays
+        modePropertiesArray.push(element);
+        modeValuesArray.push(propertyMapping[element]);
     }
-    
-    propertyModesForChart = propertyMapping;
 }
 
 makeAdzunaQuery("us", 10, "engineer");
