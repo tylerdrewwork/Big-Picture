@@ -1,18 +1,35 @@
 body {
-    background-color:#90a4ae;
-    font-family: 'Playfair Display', serif;
+    background-color: whitesmoke;
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
+.brand-logo {
+    font-family: 'Playfair Display', serif;
+}
+
+
+
+main {
+    flex: 1 0 auto;
+    
+  }
+
 #top-row {
-    background-color: #cfd8dc;
-    font-size: 40px;
+    background-color: gray;
+    display: inline-flexbox;
+    margin-top: 40px;
+    color: white;
+    
+    
 }
 
 #graph-row {
     background-color: #cfd8dc ;
    
-    font-size: 40px;
+    font-size: 20px;
     text-align: center;
 }
 
@@ -26,10 +43,14 @@ body {
 #job-listing-row {
     background-color: #cfd8dc ;
  
-    font-size: 40px;
+    font-size: 20px;
     text-align: center;
 }
 
 .main-content {
     display: inline-block;
+}
+
+.filters {
+display: inline-flex;
 }

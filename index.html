@@ -17,42 +17,97 @@
 </head>
 
 <body>
-
-  <nav>
-
-    <div class="nav-wrapper blue-grey">
-      <a href="#" class="brand-logo center">Big Picture</a>
-      <ul id="nav-mobile" class="left hide-on-med-and-down">
-        <li><a href="sass.html">Contact</a></li>
-        <li><a href="badges.html">FAQ</a></li>
-      </ul>
-    </div>
-  </nav>
-
-    <input id="search-bar" onclick="#" type="text" name="search" placeholder="Search">
   
-    <div class="row main-content" id="top-row">
-      <div class="col s6">Keyword Input<p>put the stuff for the Keyword search</p>
+    <nav>
+
+      <div class="nav-wrapper black">
+        <a href="#" class="brand-logo center">Big Picture</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+          <li><a href="sass.html">Contact</a></li>
+
+        </ul>
       </div>
-      <div class="col s6">Filters<p>Here we would put the filters </p>
+    </nav>
+    <div class="container">
+    <main>
+
+
+      <div class="row" id="top-row">
+        <div class="col s12">Keyword Input
+          <input id="search-bar" type="text" name="search" placeholder="Search">
+
+          <div class="filters right">
+
+            <div class="input-field">
+              <select>
+                <option value="" disabled selected>Choose Your Filter</option>
+                <option data-property="title" value="1">Title</option>
+                <option data-property="Description" value="2">Description</option>
+                <option data-property="Company" value="3">Company</option>
+                <option data-property="Country" value="4">Country</option>
+                <option data-property="State" value="5">State</option>
+                <option data-property="City" value="6">City</option>
+                <option data-property="Date" value="7">Date</option>
+                <option data-property="PostingURL" value="8">PostingURL</option>
+              </select>
+              <label>Filter Select</label>
+            </div>
+          </div>
+        </div>
+          <button>GO!</button>
+
       </div>
 
-    </div>
-    
-    <div class="scrolling-wrapper">
-    <div class="row main-content" id="graph-row">
-      <div class="col s12">Graphs Column<p>Graphs Area</p>
+
+      <div class="scrolling-wrapper">
+        <div class="row main-content center" id="graph-row">
+          <div class="col s12">Graphs Column<p>Graphs Area</p>
+          </div>
+        </div>
+
+        <div class="row main-content center" id="job-listing-row">
+          <div class="col s12">Respective Job Listing
+            <ul class="collection">
+              <li class="collection-item avatar">
+                <img src="images/yuna.jpg" alt="" class="circle">
+                <span class="title">Title</span>
+                <p>First Line <br>
+                  Second Line
+                </p>
+          </div>
+        </div>
+
+
       </div>
-    </div>
-
-    <div class="row main-content" id="job-listing-row">
-      <div class="col s12">Respective Job Listing<P>Job Listing</P></div>
-    </div>
-
-
-
-
+    </main>
   </div>
+    <footer class="page-footer black">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Big Picture</h5>
+            <p class="grey-text text-lighten-4">Simplifying The Hunt.</p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Git Profiles</h5>
+            <ul>
+              <li><a class="grey-text text-lighten-3" href="#!">Chambers</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Matthew</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Nay</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Tyler</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          © 2014 Copyright CMNT
+        </div>
+      </div>
+    </footer>
+
+
+  
 
 
   <!-- <div class="parallax-container">

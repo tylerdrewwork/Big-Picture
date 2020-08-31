@@ -125,3 +125,7 @@ function getModeOfProperty(property) {
 
 makeAdzunaQuery("us", 10, "engineer");
 
+//initializes select box
+$(document).ready(function(){
+    $('select').formSelect();
+  });
