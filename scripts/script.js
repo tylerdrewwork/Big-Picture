@@ -82,7 +82,7 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
             jobDataForChart.push(newObject);
         }
         console.log("Job Data For Chart: ", jobDataForChart);
-        getModeOfProperty('city'); // TODO Tyler remove after done testing
+        getModeOfProperty('title'); // TODO Tyler remove after done testing
         makeChart();
     });
 }
@@ -126,6 +126,8 @@ function getModeOfProperty(property) {
         modePropertiesArray.push(element);
         modeValuesArray.push(propertyMapping[element]);
     }
+
+    console.log(propertyMapping);
 }
 
 makeAdzunaQuery("us", 100, "engineer");
