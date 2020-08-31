@@ -82,7 +82,7 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
             jobDataForChart.push(newObject);
         }
         console.log("Job Data For Chart: ", jobDataForChart);
-        getModeOfProperty('city'); // TODO Tyler remove after done testing
+        getModeOfProperty('country'); // TODO Tyler remove after done testing
         makeChart();
     });
 }
