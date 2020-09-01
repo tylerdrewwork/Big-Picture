@@ -19,14 +19,18 @@ main {
 
 #top-row {
     background-color: gray;
-    display: inline-flexbox;
     margin-top: 40px;
     color: white;
     
     
 }
 
+#search-bar {
+    width: 100%;
+}
+
 #graph-row {
+    display: inline-flexbox;
     background-color: #cfd8dc ;
    
     font-size: 20px;
@@ -49,8 +53,14 @@ main {
 
 .main-content {
     display: inline-block;
+
 }
 
 .filters {
-display: inline-flex;
+    width: 100%;
+
+}
+
+.go-button {
+    align-content: center;
 }
