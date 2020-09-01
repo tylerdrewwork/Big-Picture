@@ -106,17 +106,17 @@ function getModeOfProperty(property) {
     
     // Get the frequency of keys in job data
     for (let i = 0; i < jobDataForChart.length; i++) {
-        let thisKeyValueFrequency = jobDataForChart[i][property]; // The keys index, and its frequency
+        let thisProperty = jobDataForChart[i][property]; // The keys index, and its frequency
 
         // If the current key doesn't exist in the keymap yet, declare it with the value 0.
-        if(propertyMapping[thisKeyValueFrequency] === undefined) {
-            propertyMapping[thisKeyValueFrequency] = 0; 
+        if(propertyMapping[thisProperty] === undefined) {
+            propertyMapping[thisProperty] = 0; 
         }
-        propertyMapping[thisKeyValueFrequency] ++;
+        propertyMapping[thisProperty] ++;
     }
 
-    // Get the highest frequency
     for (let element in propertyMapping) {
+        // Setting the mode
         if (propertyMapping[element] > greatestFreq) {
             greatestFreq = propertyMapping[element];
             mode = element;
