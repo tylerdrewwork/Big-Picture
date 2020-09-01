@@ -6,16 +6,22 @@ body {
     flex-direction: column;
 }
 
-.brand-logo {
-    font-family: 'Playfair Display', serif;
-}
-
-
-
 main {
     flex: 1 0 auto;
     
   }
+
+  .brand-logo {
+    
+    font-family: 'Playfair Display', serif;
+
+}
+
+.input-field {
+    padding-bottom: .7px;
+    color: white;
+}
+
 
 #top-row {
     background-color: gray;
@@ -28,6 +34,7 @@ main {
 
 #search-bar {
     width: 100%;
+    color: white;
 }
 
 #graph-row {
@@ -64,6 +71,9 @@ main {
 
 .go-button {
     align-content: center;
+    hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
 }
 
 .loader {
@@ -78,3 +88,4 @@ main {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  
