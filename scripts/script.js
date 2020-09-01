@@ -10,8 +10,8 @@ var currentAdzunaResponse = {};
 var jobDataForChart = []; // Contains all of the "jobObjectTemplate" objects that have all the revised data for charts
 // The following 2 arrays contain the properties and values of the calculated mode of the jobDataForChart. 
 // DONT SORT THESE ARRAYS! They are paired in order (so index 0 on properties is paired with index 0 on values)
-var modePropertiesArray = [];
-var modeValuesArray = [];
+var jobDataPropertyNames = [];
+var jobDataPropertyFrequencies = [];
 
 // ANCHOR Queries 🤔
 function makeAdzunaQuery(){
@@ -19,7 +19,7 @@ function makeAdzunaQuery(){
 
     let countryCode = "us";
     let resultsToAnalyze = 25;
-    let titleToSearch = "";
+    let titleToSearch = "programmer";
     let keywordsToSearch = searchBarEl.value;
 
     if(keywordsToSearch === undefined) {
@@ -36,7 +36,7 @@ function makeAdzunaQuery(){
         
         // responsesToAdd, a new variable that lets us pick the responses we want to use
         let responsesToAdd = filterOutDuplicateResponsesFromAdzuna(response);
-        
+
         // then, populate the job data array using those new responses
         populateJobDataFromAdzuna(responsesToAdd);
 
@@ -50,32 +50,63 @@ function makeAdzunaQuery(){
 
 function filterOutDuplicateResponsesFromAdzuna(response) {
     // Make sure there are no identical jobs in the responses.
-    let responsesToAdd = [];
-    let titles = [];
-    // FIXME tylers broken code for filtering out identical responses
-    for (let i = 0; i < .length; i++) {
-        if(!response) {
-            /*
-            If responses has the same title as a job in responses to add,
-            check to see if they have the same company.
-            if so, then stop this iterationn
+    // I left in some console.log's, uncomment them to get a better understanding.
+
+    let responsesToAdd = []; // The responses we will end up returning (aka approved responses)
+    let companyTitlePairs = []; // array of objects with 'company: title' pairs. We store new approved response company and titles in here.
+
+    // Go through each response
+    for (let i = 0; i < response.results.length; i++) {
+        let thisResult = response.results[i];
+
+        // If the company of thisResult is equal to a company inside of companyTitlePairs, then proceed
+        if(companyTitlePairs.some(el => el.company === thisResult.company.display_name)) {
+            // Company exists in responses added!
             
-            if response.title === responsesToAdd.title
-            {
-                
+            // Check all of the companyTitlePairs. thisCompaniesPairs are the objects in companyTitlePairs that have the same company name
+            let thisCompaniesPairs = companyTitlePairs.filter(el => el.company === thisResult.company.display_name)
+            
+            // Now we need to see if any of thisCompaniesPairs title's equal thisResult's title
+            for(let j = 0; j < thisCompaniesPairs.length; j++) {
+                if(thisCompaniesPairs[j].title === thisResult.title) {
+                    // HERES A CONSOLE LOG FOR RESULTS THAT ARE FILTERED! 
+                    // console.log("Filtering out this duplicate result!", thisResult)
+                    break; // Break out of this for loop.
+                }
+                else {
+                    // There was a company that matched the results company, but they don't share the same title! Add it!
+                    addNewCompanyTitlePair(thisResult);
+                    break; // break out of this for loop.
+                }
             }
-            */
-            continue;
-        } else {
-            responsesToAdd.push(response.results[i]);
         }
+        else {
+            // If thisResult's company doesn't match a company we already have, no need to check any further! Add it!
+            addNewCompanyTitlePair(thisResult);
+        }
+    }
+
+    // console.log("companyTitlePairs are the pairs we already have approved: ", companyTitlePairs);
+
+    // Return this as an array of responses to use.
+    return responsesToAdd;
+
+    // This function creates the company:title pairs, then puts them inside companyTitlePairs. 
+    function addNewCompanyTitlePair(result){
+        let newCompany = result.company.display_name;
+        let newTitle = result.title;
+        companyTitlePairs.push({company: newCompany, title: newTitle});
+        
+        // console.log("This company title pair: ", companyTitlePairs);
+
+        responsesToAdd.push(result);
     }
 }
 
 function populateJobDataFromAdzuna(responsesToAdd) {
         // For each response, construct a new object from template and then push it to the job data array
         let newObject;
-        for(let i = 0; i < responsesToAdd.length; i++) {
+        for(let i = 0; i < responsesToAdd.results.length; i++) {
             newObject = {
                 ...jobObjectTemplate // Clone the template
             }
@@ -113,8 +144,8 @@ function getFrequenciesOfProperties() {
 
     for (let element in propertyMapping) {
         // Populate both arrays
-        modePropertiesArray.push(element);
-        modeValuesArray.push(propertyMapping[element]);
+        jobDataPropertyNames.push(element);
+        jobDataPropertyFrequencies.push(propertyMapping[element]);
     }
 }
 
