@@ -49,7 +49,7 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
                 /*
                 If responses has the same title as a job in responses to add,
                 check to see if they have the same company.
-                if so, then stop this iterationn
+                if so, then stop this iteration
                 
                 if response.title === responsesToAdd.title
                 {
@@ -61,7 +61,7 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
                 responsesToAdd.push(response.results[i]);
             }
         }
-
+        
         // For each response, construct a new object from template and then push it to the job data array
         let newObject;
         for(let i = 0; i < responsesToAdd.length; i++) {
@@ -82,7 +82,7 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
             jobDataForChart.push(newObject);
         }
         console.log("Job Data For Chart: ", jobDataForChart);
-        getModeOfProperty('country'); // TODO Tyler remove after done testing
+        getModeOfProperty('category'); // TODO Tyler remove after done testing
         makeChart();
     });
 }
