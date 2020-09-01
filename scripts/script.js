@@ -160,5 +160,32 @@ $(document).ready(function(){
 let goButtonEl = document.getElementById("go-button");
 $(goButtonEl).on("click", makeAdzunaQuery);
 
+// On Key Down, anywhere
+document.addEventListener('keydown', function (event) {
+    bobEasterEgg(event);
+});
+
 // Bob Easter Egg
-// document.onkeydown("b")
+let wasBPressed = false;
+let wasOPressed = false;
+function bobEasterEgg() {
+    let key = event.key || event.keyCode;
+    if(key === "b" || key === 66) {
+        if(wasBPressed && wasOPressed) {
+            // Final B
+            wasBPressed = false;
+            wasOPressed = false;
+            alert("Bob!");
+        }
+        else {
+            wasBPressed = true;
+        }
+    }
+    else if((key === "o" || key === 79) && wasBPressed) {
+        wasOPressed = true;
+    }
+    else {
+        wasBPressed = false;
+        wasOPressed = false;
+    }
+}
