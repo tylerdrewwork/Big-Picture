@@ -116,7 +116,7 @@ function populateJobDataFromAdzuna(responsesToAdd) {
             newObject.company = responsesToAdd[i].company.display_name;
             newObject.country = responsesToAdd[i].location.area[0];
             newObject.state = responsesToAdd[i].location.area[1];
-            newObject.city = responsesToAdd[i].location.area[2];
+            newObject.city = responsesToAdd[i].location.area[3];
             newObject.created = responsesToAdd[i].created;
             newObject.postingURL = responsesToAdd[i].redirect_url;
             newObject.salary = responsesToAdd[i].salary_is_predicted;
