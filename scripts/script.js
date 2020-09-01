@@ -19,7 +19,7 @@ function makeAdzunaQuery(){
 
     let countryCode = "us";
     let resultsToAnalyze = 25;
-    let titleToSearch = "programmer";
+    let titleToSearch = "";
     let keywordsToSearch = searchBarEl.value;
 
     if(keywordsToSearch === undefined) {
@@ -106,7 +106,7 @@ function filterOutDuplicateResponsesFromAdzuna(response) {
 function populateJobDataFromAdzuna(responsesToAdd) {
         // For each response, construct a new object from template and then push it to the job data array
         let newObject;
-        for(let i = 0; i < responsesToAdd.results.length; i++) {
+        for(let i = 0; i < responsesToAdd.length; i++) {
             newObject = {
                 ...jobObjectTemplate // Clone the template
             }
@@ -149,9 +149,12 @@ function getFrequenciesOfProperties() {
     }
 }
 
-makeAdzunaQuery("us", 100, "engineer");
-
 //initializes select box
 $(document).ready(function(){
     $('select').formSelect();
 });
+
+// ANCHOR Event Listeners
+
+let goButtonEl = document.getElementById("go-button");
+$(goButtonEl).on("click", makeAdzunaQuery);
