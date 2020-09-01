@@ -28,6 +28,13 @@ main {
 
 }
 
+#footer-header{
+    font-size: 30px;
+    color::rgb(235,228,220);
+    font-family: 'Eczar', serif;
+    letter-spacing: 3px;
+}
+
 .input-field {
     margin-bottom: 0;
     color: white;
@@ -49,6 +56,19 @@ main {
 }
 
 #graph-row {
+
+    display: inline-flexbox;
+    border: black 2px solid;
+    border-radius: 5px;
+    margin: 0 10px;
+    margin-left: 10px !important;
+    padding: 10px;
+    margin-bottom: 40px;
+   
+    font-size: 20px;
+    text-align: center;
+}
+#job-row {
 
     display: inline-flexbox;
     border: black 2px solid;
@@ -129,4 +149,5 @@ background-color:rgb(26,86,29);
 .page-footer {
     background-color: black;
     color: rgb(235,228,220);
+    display: inline;
 }
