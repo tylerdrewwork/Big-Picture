@@ -7,10 +7,10 @@ function makeChart() {
     var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: modePropertiesArray,
+        labels: jobDataPropertyNames,
         datasets: [{
             label: '# of Times Appeared in Searched Articles',
-            data: modeValuesArray, 
+            data: jobDataPropertyFrequencies,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
