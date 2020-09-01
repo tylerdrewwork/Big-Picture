@@ -14,13 +14,6 @@ var modePropertiesArray = [];
 var modeValuesArray = [];
 
 // ANCHOR Queries 🤔
-// These weird comments below are JS Docs. If you hover over makeAdzunaQuery you can see that they help describe these functions in depth
-/**
- * @param {string} countryCode - 2 letter code for the country to search in
- * @param {number} resultsToAnalyze - Default 10. Results to display from a query.
- * @param {string} title - Title Keyword to search for
- * @param {string} keywords - Keywords to search for in any part of the Job Posting. Separated with spaces. Equals "" if null.
- */
 function makeAdzunaQuery(){
     let searchBarEl = document.getElementById("search-bar");
 
