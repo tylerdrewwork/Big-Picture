@@ -1,14 +1,16 @@
-//TO DO:
-// establish a container on line 43 in html
+// set myChart as global variable 
+var myChart 
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
+//create function for making chart so we can nest it into ajax on other script
+function makeChart() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: jobDataPropertyNames,
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            label: '# of Times Appeared in Searched Articles',
+            data: jobDataPropertyFrequencies,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -38,3 +40,6 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+}
+

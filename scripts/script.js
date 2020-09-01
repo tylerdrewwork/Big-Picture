@@ -8,26 +8,25 @@ var currentAdzunaResponse = {};
 
 // Chamber's Data
 var jobDataForChart = []; // Contains all of the "jobObjectTemplate" objects that have all the revised data for charts
-var propertyModesForChart = {}; // Contains the frequency of all of the jobData returned by Adzuna response
+// The following 2 arrays contain the properties and values of the calculated mode of the jobDataForChart. 
+// DONT SORT THESE ARRAYS! They are paired in order (so index 0 on properties is paired with index 0 on values)
+var jobDataPropertyNames = [];
+var jobDataPropertyFrequencies = [];
 
 // ANCHOR Queries 🤔
+function makeAdzunaQuery(){
+    let searchBarEl = document.getElementById("search-bar");
 
-// These weird comments below are JS Docs. If you hover over makeAdzunaQuery you can see that they help describe these functions in depth
-/**
- * @param {string} countryCode - 2 letter code for the country to search in
- * @param {number} resultsToAnalyze - Default 10. Results to display from a query.
- * @param {string} title - Title Keyword to search for
- * @param {string} keywords - Keywords to search for in any part of the Job Posting. Separated with spaces. Equals "" if null.
- */
+    let countryCode = "us";
+    let resultsToAnalyze = 25;
+    let titleToSearch = "";
+    let keywordsToSearch = searchBarEl.value;
 
-makeAdzunaQuery("us", 10, "engineer");
-function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
-    // TODO make these grab from inputs on the html
-    if(keywords === undefined) {
-        keywords = ""; // If keywords is undefined, set it to "" so it doesn't break the query
+    if(keywordsToSearch === undefined) {
+        keywordsToSearch = ""; // If keywords is undefined, set it to "" so it doesn't break the query
     }
     let URL = "https://api.adzuna.com/v1/api/jobs/" + countryCode + "/search/1?app_id=" + adzunaAppID + "&app_key=" + adzunaAPIKey + 
-        "&results_per_page=" + resultsToAnalyze + "&what=" + keywords + "&title_only=" + title;
+        "&results_per_page=" + resultsToAnalyze + "&what=" + keywordsToSearch + "&title_only=" + titleToSearch;
 
     $.ajax({
         url: URL,
@@ -35,31 +34,76 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
     }).then(function(response) {
         console.log("Adzuna Response: ", response);
         
-        // Make sure there are no identical jobs in the responses.
-        let responsesToAdd = [];
-        // FIXME tylers broken code for filtering out identical responses
-        for (let i = 0; i < response.results.length; i++) {
-            //for (let j = 0; j < responsesToAdd.length; j++) {
-            //    for each response, go through each responsesToAdd
-            //    if(response.results[i].title ===)
-            //}
-            if(!response) {
-                /*
-                If responses has the same title as a job in responses to add,
-                check to see if they have the same company.
-                if so, then stop this iterationn
-                
-                if response.title === responsesToAdd.title
-                {
-                    
+        // responsesToAdd, a new variable that lets us pick the responses we want to use
+        let responsesToAdd = filterOutDuplicateResponsesFromAdzuna(response);
+
+        // then, populate the job data array using those new responses
+        populateJobDataFromAdzuna(responsesToAdd);
+
+        // After that, get the frequencies of all the properties
+        getFrequenciesOfProperties();
+
+        // And then create and display the chart
+        makeChart();
+    });
+}
+
+function filterOutDuplicateResponsesFromAdzuna(response) {
+    // Make sure there are no identical jobs in the responses.
+    // I left in some console.log's, uncomment them to get a better understanding.
+
+    let responsesToAdd = []; // The responses we will end up returning (aka approved responses)
+    let companyTitlePairs = []; // array of objects with 'company: title' pairs. We store new approved response company and titles in here.
+
+    // Go through each response
+    for (let i = 0; i < response.results.length; i++) {
+        let thisResult = response.results[i];
+
+        // If the company of thisResult is equal to a company inside of companyTitlePairs, then proceed
+        if(companyTitlePairs.some(el => el.company === thisResult.company.display_name)) {
+            // Company exists in responses added!
+            
+            // Check all of the companyTitlePairs. thisCompaniesPairs are the objects in companyTitlePairs that have the same company name
+            let thisCompaniesPairs = companyTitlePairs.filter(el => el.company === thisResult.company.display_name)
+            
+            // Now we need to see if any of thisCompaniesPairs title's equal thisResult's title
+            for(let j = 0; j < thisCompaniesPairs.length; j++) {
+                if(thisCompaniesPairs[j].title === thisResult.title) {
+                    // HERES A CONSOLE LOG FOR RESULTS THAT ARE FILTERED! 
+                    // console.log("Filtering out this duplicate result!", thisResult)
+                    break; // Break out of this for loop.
                 }
-                */
-                continue;
-            } else {
-                responsesToAdd.push(response.results[i]);
+                else {
+                    // There was a company that matched the results company, but they don't share the same title! Add it!
+                    addNewCompanyTitlePair(thisResult);
+                    break; // break out of this for loop.
+                }
             }
         }
+        else {
+            // If thisResult's company doesn't match a company we already have, no need to check any further! Add it!
+            addNewCompanyTitlePair(thisResult);
+        }
+    }
 
+    // console.log("companyTitlePairs are the pairs we already have approved: ", companyTitlePairs);
+
+    // Return this as an array of responses to use.
+    return responsesToAdd;
+
+    // This function creates the company:title pairs, then puts them inside companyTitlePairs. 
+    function addNewCompanyTitlePair(result){
+        let newCompany = result.company.display_name;
+        let newTitle = result.title;
+        companyTitlePairs.push({company: newCompany, title: newTitle});
+        
+        // console.log("This company title pair: ", companyTitlePairs);
+
+        responsesToAdd.push(result);
+    }
+}
+
+function populateJobDataFromAdzuna(responsesToAdd) {
         // For each response, construct a new object from template and then push it to the job data array
         let newObject;
         for(let i = 0; i < responsesToAdd.length; i++) {
@@ -72,60 +116,76 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
             newObject.company = responsesToAdd[i].company.display_name;
             newObject.country = responsesToAdd[i].location.area[0];
             newObject.state = responsesToAdd[i].location.area[1];
-            newObject.city = responsesToAdd[i].location.area[2];
+            newObject.city = responsesToAdd[i].location.area[3];
             newObject.created = responsesToAdd[i].created;
             newObject.postingURL = responsesToAdd[i].redirect_url;
             newObject.salary = responsesToAdd[i].salary_is_predicted;
             // Push this awesome new object to job data!
             jobDataForChart.push(newObject);
         }
-        console.log("Job Data For Chart: ", jobDataForChart);
-        getModeOfProperty('city'); // TODO Tyler remove after done testing
-    });
 }
 
 // ANCHOR Analytical Functions to return information
-
-/**
- * @desc Gets the most recurring value of "key" throughout the list of job data.
- * @example getModeOfKey('title'); // will get the most recurring titles throughout the job data. 
- */
-function getModeOfProperty(property) {
-    /* tylers Pseudo code
-    1. add all of the keys to an array
-    2. look through the array and see which is most common
-    3. return that key
-    */
-   
-    let mode = "";
-    let greatestFreq = 0;
+function getFrequenciesOfProperties() {
+    // TODO Nay, can you please let the following variable (property) equal whatever dropdown is selected?
+    // So if category is selected, then it equals "category"
+    let property = "";
     let propertyMapping = {}; // This records the frequency of the key
     
     // Get the frequency of keys in job data
     for (let i = 0; i < jobDataForChart.length; i++) {
-        let thisKeyValueFrequency = jobDataForChart[i][property]; // The keys index, and its frequency
-
+        let thisProperty = jobDataForChart[i][property]; // The keys index, and its frequency
         // If the current key doesn't exist in the keymap yet, declare it with the value 0.
-        if(propertyMapping[thisKeyValueFrequency] === undefined) {
-            propertyMapping[thisKeyValueFrequency] = 0; 
+        if(propertyMapping[thisProperty] === undefined) {
+            propertyMapping[thisProperty] = 0; 
         }
-        propertyMapping[thisKeyValueFrequency] ++;
+        propertyMapping[thisProperty] ++;
     }
 
-    // Get the highest frequency
     for (let element in propertyMapping) {
-        if (propertyMapping[element] > greatestFreq) {
-            greatestFreq = propertyMapping[element];
-            mode = element;
-        }
+        // Populate both arrays
+        jobDataPropertyNames.push(element);
+        jobDataPropertyFrequencies.push(propertyMapping[element]);
     }
-    
-    propertyModesForChart = propertyMapping;
 }
-
-makeAdzunaQuery("us", 10, "engineer");
 
 //initializes select box
 $(document).ready(function(){
     $('select').formSelect();
-  });
+});
+
+// ANCHOR Event Listeners
+
+// Go Button
+let goButtonEl = document.getElementById("go-button");
+$(goButtonEl).on("click", makeAdzunaQuery);
+
+// On Key Down, anywhere
+document.addEventListener('keydown', function (event) {
+    bobEasterEgg(event);
+});
+
+// Bob Easter Egg
+let wasBPressed = false;
+let wasOPressed = false;
+function bobEasterEgg() {
+    let key = event.key || event.keyCode;
+    if(key === "b" || key === 66) {
+        if(wasBPressed && wasOPressed) {
+            // Final B
+            wasBPressed = false;
+            wasOPressed = false;
+            alert("Bob!");
+        }
+        else {
+            wasBPressed = true;
+        }
+    }
+    else if((key === "o" || key === 79) && wasBPressed) {
+        wasOPressed = true;
+    }
+    else {
+        wasBPressed = false;
+        wasOPressed = false;
+    }
+}
