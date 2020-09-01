@@ -19,14 +19,14 @@ function makeAdzunaQuery(){
 
     let countryCode = "us";
     let resultsToAnalyze = 25;
-    let title = "";
-    let keywords = searchBarEl.value;
+    let titleToSearch = "";
+    let keywordsToSearch = searchBarEl.value;
 
-    if(keywords === undefined) {
-        keywords = ""; // If keywords is undefined, set it to "" so it doesn't break the query
+    if(keywordsToSearch === undefined) {
+        keywordsToSearch = ""; // If keywords is undefined, set it to "" so it doesn't break the query
     }
     let URL = "https://api.adzuna.com/v1/api/jobs/" + countryCode + "/search/1?app_id=" + adzunaAppID + "&app_key=" + adzunaAPIKey + 
-        "&results_per_page=" + resultsToAnalyze + "&what=" + keywords + "&title_only=" + title;
+        "&results_per_page=" + resultsToAnalyze + "&what=" + keywordsToSearch + "&title_only=" + titleToSearch;
 
     $.ajax({
         url: URL,
@@ -34,31 +34,45 @@ function makeAdzunaQuery(){
     }).then(function(response) {
         console.log("Adzuna Response: ", response);
         
-        // Make sure there are no identical jobs in the responses.
-        let responsesToAdd = [];
-        // FIXME tylers broken code for filtering out identical responses
-        for (let i = 0; i < response.results.length; i++) {
-            //for (let j = 0; j < responsesToAdd.length; j++) {
-            //    for each response, go through each responsesToAdd
-            //    if(response.results[i].title ===)
-            //}
-            if(!response) {
-                /*
-                If responses has the same title as a job in responses to add,
-                check to see if they have the same company.
-                if so, then stop this iterationn
-                
-                if response.title === responsesToAdd.title
-                {
-                    
-                }
-                */
-                continue;
-            } else {
-                responsesToAdd.push(response.results[i]);
-            }
-        }
+        // responsesToAdd, a new variable that lets us pick the responses we want to use
+        let responsesToAdd = filterOutDuplicateResponsesFromAdzuna(response);
+        
+        // then, populate the job data array using those new responses
+        populateJobDataFromAdzuna(responsesToAdd);
 
+        // After that, get the frequencies of all the properties
+        getFrequenciesOfProperties();
+
+        // And then create and display the chart
+        makeChart();
+    });
+}
+
+function filterOutDuplicateResponsesFromAdzuna(response) {
+    // Make sure there are no identical jobs in the responses.
+    let responsesToAdd = [];
+    let titles = [];
+    // FIXME tylers broken code for filtering out identical responses
+    for (let i = 0; i < .length; i++) {
+        if(!response) {
+            /*
+            If responses has the same title as a job in responses to add,
+            check to see if they have the same company.
+            if so, then stop this iterationn
+            
+            if response.title === responsesToAdd.title
+            {
+                
+            }
+            */
+            continue;
+        } else {
+            responsesToAdd.push(response.results[i]);
+        }
+    }
+}
+
+function populateJobDataFromAdzuna(responsesToAdd) {
         // For each response, construct a new object from template and then push it to the job data array
         let newObject;
         for(let i = 0; i < responsesToAdd.length; i++) {
@@ -78,19 +92,10 @@ function makeAdzunaQuery(){
             // Push this awesome new object to job data!
             jobDataForChart.push(newObject);
         }
-        console.log("Job Data For Chart: ", jobDataForChart);
-        getModeOfProperty(); // TODO Tyler remove after done testing
-        makeChart();
-    });
 }
 
 // ANCHOR Analytical Functions to return information
-
-/**
- * @desc Gets the most recurring value of "key" throughout the list of job data.
- * @example getModeOfKey('title'); // will get the most recurring titles throughout the job data. 
- */
-function getModeOfProperty() {
+function getFrequenciesOfProperties() {
     // TODO Nay, can you please let the following variable (property) equal whatever dropdown is selected?
     // So if category is selected, then it equals "category"
     let property = "";
