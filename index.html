@@ -9,10 +9,9 @@
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="./Assets/reset.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="./Assets/styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Roboto&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@700&family=Rubik&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/websiteIcon.ico">
+  <link rel="stylesheet" href="./Assets/styles.css">
   <title>BigPicture</title>
 </head>
 
@@ -21,10 +20,10 @@
   <!-- nav bar -->
 
   <nav>
-    <div class="nav-wrapper black">
-      <a href="#" class="brand-logo center">Big Picture</a>
+    <div class="nav-wrapper">
+      <a href="#" id="brand-logo" class="brand-logo center">Big Picture</a>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
-        <li><a href="sass.html">Contact</a></li>
+        <li><a id="contact" href="sass.html">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -38,15 +37,15 @@
 
 
       <div class="row valign-wrapper" id="top-row">
-        <div class="col s6">
-          <input id="search-bar" type="text" name="search" placeholder="Search for a keyword in your field">
+        <div class="col s6 search-container">
+          <label class="text-black" for="search-bar">Search</label>
+          <input id="search-bar" type="text" name="search">
         </div>
 
-        <div class=" col s6 filters">
-
+        <div class=" col s6 filters search-container">
           <div class="input-field">
             <select>
-              <option value="" disabled selected>Choose how to sort the information</option>
+              <option value="" disabled selected></option>
               <option data-property="title" value="1">Title</option>
               <option data-property="Description" value="2">Description</option>
               <option data-property="Company" value="3">Company</option>
@@ -56,18 +55,18 @@
               <option data-property="Date" value="7">Date</option>
               <option data-property="PostingURL" value="8">PostingURL</option>
             </select>
+            <label class="text-black">Choose how to filter the info</label>
           </div>
-          
         </div>
         
       </div>
-      <a class="waves-effect waves-light btn-large right" id="go-button">Search!</a>
+      
 
       <!-- go button -->
 
       <div class="row">
-          <div class="col s12">
-           
+          <div class="col s12 go">
+            <a class="waves-effect waves-light green-darken-3 btn-large" id="go-button">Search!</a>
           </div>
 
       </div>
@@ -75,11 +74,17 @@
 
 
       <div class="row" id="graph-row">
-        <div class="col s6 scrolling-wrapper">Graphs Column<p>Graphs Area</p>
+        <div class="col s6 design">Graph
+          <br>
+          <br>
+         <img src="https://via.placeholder.com/350" alt="placeholder"> 
+
         </div>
 
-        <div class="col s6">Job Listings
-
+        <div class="col s6 design">Job Listings
+          <br>
+          <br>
+          <img src="https://via.placeholder.com/350" alt="placeholder"> 
         </div>
       </div>
 
@@ -87,14 +92,14 @@
     </div>
     </main>
   </div>
-  <footer class="page-footer black">
+  <footer class="page-footer">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
           <h5 class="white-text">Big Picture</h5>
           <p class="grey-text text-lighten-4">Simplifying The Hunt.</p>
         </div>
-        <div class="col l4 offset-l2 s12">
+        <div class="col l2 offset-l4  s12">
           <h5 class="white-text">Git Profiles</h5>
           <ul>
             <li><a class="grey-text text-lighten-3" href="https://github.com/ChambersM97" target="_blank">Chambers</a></li>
