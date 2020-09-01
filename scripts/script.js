@@ -14,7 +14,6 @@ var modePropertiesArray = [];
 var modeValuesArray = [];
 
 // ANCHOR Queries 🤔
-
 // These weird comments below are JS Docs. If you hover over makeAdzunaQuery you can see that they help describe these functions in depth
 /**
  * @param {string} countryCode - 2 letter code for the country to search in
@@ -22,9 +21,14 @@ var modeValuesArray = [];
  * @param {string} title - Title Keyword to search for
  * @param {string} keywords - Keywords to search for in any part of the Job Posting. Separated with spaces. Equals "" if null.
  */
+function makeAdzunaQuery(){
+    let searchBarEl = document.getElementById("search-bar");
 
-function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
-    // TODO make these grab from inputs on the html
+    let countryCode = "us";
+    let resultsToAnalyze = 25;
+    let title = "";
+    let keywords = searchBarEl.value;
+
     if(keywords === undefined) {
         keywords = ""; // If keywords is undefined, set it to "" so it doesn't break the query
     }
@@ -82,7 +86,7 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
             jobDataForChart.push(newObject);
         }
         console.log("Job Data For Chart: ", jobDataForChart);
-        getModeOfProperty('country'); // TODO Tyler remove after done testing
+        getModeOfProperty(); // TODO Tyler remove after done testing
         makeChart();
     });
 }
@@ -93,21 +97,15 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
  * @desc Gets the most recurring value of "key" throughout the list of job data.
  * @example getModeOfKey('title'); // will get the most recurring titles throughout the job data. 
  */
-function getModeOfProperty(property) {
-    /* tylers Pseudo code
-    1. add all of the keys to an array
-    2. look through the array and see which is most common
-    3. return that key
-    */
-   
-    let mode = "";
-    let greatestFreq = 0;
+function getModeOfProperty() {
+    // TODO Nay, can you please let the following variable (property) equal whatever dropdown is selected?
+    // So if category is selected, then it equals "category"
+    let property = "";
     let propertyMapping = {}; // This records the frequency of the key
     
     // Get the frequency of keys in job data
     for (let i = 0; i < jobDataForChart.length; i++) {
         let thisProperty = jobDataForChart[i][property]; // The keys index, and its frequency
-
         // If the current key doesn't exist in the keymap yet, declare it with the value 0.
         if(propertyMapping[thisProperty] === undefined) {
             propertyMapping[thisProperty] = 0; 
@@ -116,12 +114,6 @@ function getModeOfProperty(property) {
     }
 
     for (let element in propertyMapping) {
-        // Setting the mode
-        if (propertyMapping[element] > greatestFreq) {
-            greatestFreq = propertyMapping[element];
-            mode = element;
-        }
-
         // Populate both arrays
         modePropertiesArray.push(element);
         modeValuesArray.push(propertyMapping[element]);
@@ -133,4 +125,4 @@ makeAdzunaQuery("us", 100, "engineer");
 //initializes select box
 $(document).ready(function(){
     $('select').formSelect();
-  });
+});
