@@ -156,5 +156,9 @@ $(document).ready(function(){
 
 // ANCHOR Event Listeners
 
+// Go Button
 let goButtonEl = document.getElementById("go-button");
 $(goButtonEl).on("click", makeAdzunaQuery);
+
+// Bob Easter Egg
+// document.onkeydown("b")
