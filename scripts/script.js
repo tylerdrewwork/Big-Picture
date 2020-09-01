@@ -61,7 +61,7 @@ function makeAdzunaQuery(countryCode, resultsToAnalyze, title, keywords){
                 responsesToAdd.push(response.results[i]);
             }
         }
-        
+
         // For each response, construct a new object from template and then push it to the job data array
         let newObject;
         for(let i = 0; i < responsesToAdd.length; i++) {
@@ -127,6 +127,24 @@ function getModeOfProperty(property) {
         modeValuesArray.push(propertyMapping[element]);
     }
 }
+
+// Takes a string and outputs an array of strings
+// Chambers function for grouping all words in the job descriptions
+// Stretch GOAL: add a way to make sure similar words are committed to the same word count
+    //ex. Making sure Work and work go together, maybe use something like toLowerCase();
+    function myFunction(input){
+        const words = input.match(/\w+/g);
+        let counts = {}
+        for (let i = 0; i < words.length; i++) {
+           if (counts[words[i]] === undefined) {
+              counts[words[i]] = 1;
+           }
+           else {
+              counts[words[i]]++;
+           }
+        }
+        return counts;
+     }
 
 makeAdzunaQuery("us", 100, "engineer");
 

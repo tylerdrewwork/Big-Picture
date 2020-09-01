@@ -10,7 +10,7 @@ function makeChart() {
         labels: modePropertiesArray,
         datasets: [{
             label: '# of Times Appeared in Searched Articles',
-            data: modeValuesArray,
+            data: modeValuesArray, 
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -43,3 +43,4 @@ function makeChart() {
 
 }
 
+// a function that takes in a parameter and outputs an array of strings, which in this case will be words
