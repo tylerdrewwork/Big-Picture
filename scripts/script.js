@@ -125,11 +125,21 @@ function populateJobDataFromAdzuna(responsesToAdd) {
         }
 }
 
+    // nays code-- function to make dropdown work
+    window.onload=function() { // when the page has loaded 
+        document.getElementById("select1").onchange=function() { 
+          console.log (this.value)
+        } 
+      } 
+
+
 // ANCHOR Analytical Functions to return information
 function getFrequenciesOfProperties() {
     // TODO Nay, can you please let the following variable (property) equal whatever dropdown is selected?
     // So if category is selected, then it equals "category"
-    let property = "";
+
+
+
     let propertyMapping = {}; // This records the frequency of the key
     
     // Get the frequency of keys in job data
