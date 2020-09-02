@@ -44,7 +44,7 @@
         <div class=" col s5 filters search-container">
           <div class="input-field">
             <select id="select1">
-              <option value="" disabled selected></option>
+              <option value="description" disabled selected></option>
               <option value="title">title</option>
               <option value="description">description</option>
               <option value="company">company</option>
@@ -59,31 +59,22 @@
         </div>
 
         <div class="col s2 go">
-          <a class="waves-effect waves-light green-darken-3 btn-large" id="go-button">search!</a>
+          <a class="waves-effect waves-light green-darken-3 btn-large" id="go-button">go!</a>
         </div>
 
       </div>
 
-
-      <!-- go button -->
-      <!-- 
-      <div class="row">
-          <div class="col s3 go">
-            <a class="waves-effect waves-light green-darken-3 btn-large" id="go-button">Search!</a>
-          </div>
-
-      </div> -->
 
       <div class="row" id="graph-row">
         <div class="col s12 design">graph
           <br>
           <br>
-          <img src="https://via.placeholder.com/350" alt="placeholder">
+          <canvas id="myChart" width="300" height="300"></canvas>
 
         </div>
       </div>
       <div class="row" id="job-row">
-        <div class="col s12 design">job listings
+        <div id="job-listing" class="col s12 design">job listings
           <br>
           <br>
           <img src="https://via.placeholder.com/350" alt="placeholder">
