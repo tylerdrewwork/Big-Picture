@@ -10,8 +10,8 @@ let property = "description"
 var jobDataForChart = []; // Contains all of the "jobObjectTemplate" objects that have all the revised data for charts
 // The following 2 arrays contain the properties and values of the calculated mode of the jobDataForChart. 
 // DONT SORT THESE ARRAYS! They are paired in order (so index 0 on properties is paired with index 0 on values)
-var jobDataPropertyNames = [];
-var jobDataPropertyFrequencies = [];
+var chartLabels = [];
+var chartValues = [];
 
 // ANCHOR Queries 🤔
 function makeAdzunaQuery(){
@@ -32,6 +32,11 @@ function makeAdzunaQuery(){
         url: URL,
         method: "GET"
     }).then(function(response) {
+        // Reset Chart and Count
+        jobDataForChart = [];
+        chartLabels = [];
+        chartValues = [];
+
         console.log("Adzuna Response: ", response);
         
         // responsesToAdd, a new variable that lets us pick the responses we want to use
@@ -40,28 +45,18 @@ function makeAdzunaQuery(){
         // then, populate the job data array using those new responses
         populateJobDataFromAdzuna(responsesToAdd);
 
-        // After that, get the frequencies of all the properties
-        getFrequenciesOfProperties();
+        if(property === "title" || property === "description") {
+            // If we're sorting by title or description, get the counts of individual words
+            getCountOfWords();
+        }
+        else {
+            // Otherwise, get the count of the full strings
+            getCountOfProperties();
+        }
 
         // And then create and display the chart
-        makeChart();
+        updateChart();
 
-           
-        // This combines the descriptions from each job listing (multiple strings) into one string
-        for(var i = 0; i < response.results.length; i++){
-        str = str + " " + response.results[i].description
-        }
-
-        console.log(str.split(' '));
-
-        // Takes the string made from the for loop above and separates each word and its word count of 
-        //  each word and put them in their own array in the str array
-        let words = str.split(' ')
-        let count = {}
-        for(let word of words){
-            count[word] ? count[word]++ : count[word] = 1
-        }
-        console.log(count);
 
         // Chambers note: Takes a string and outputs an array of strings
         // Stretch GOAL: add a way to make sure similar words are committed to the same word count
@@ -160,22 +155,9 @@ function populateJobDataFromAdzuna(responsesToAdd) {
         }
 }
 
-    // nays code-- function to make dropdown work
-    window.onload=function() { // when the page has loaded 
-        document.getElementById("select1").onchange=function() { 
-        property = this.value 
-        console.log (property)
-        } 
-      } 
-
 
 // ANCHOR Analytical Functions to return information
-function getFrequenciesOfProperties() {
-    // TODO Nay, can you please let the following variable (property) equal whatever dropdown is selected?
-    // So if category is selected, then it equals "category"
-
-
-
+function getCountOfProperties() {
     let propertyMapping = {}; // This records the frequency of the key
     
     // Get the frequency of keys in job data
@@ -187,17 +169,67 @@ function getFrequenciesOfProperties() {
         }
         propertyMapping[thisProperty] ++;
     }
-
-    for (let element in propertyMapping) {
-        // Populate both arrays
-        jobDataPropertyNames.push(element);
-        jobDataPropertyFrequencies.push(propertyMapping[element]);
-    }
-
-
+    
+    pushDataToChartVariables(propertyMapping);
 }
 
+function getCountOfWords() {
+        // This combines the descriptions from each job listing (multiple strings) into one string
+        // Chambers, I changed this from looping thru response.results to jobDataForChart (jobDataForChart has all of the information we need after filtering duplicated) - Tyler
+        for(var i = 0; i < jobDataForChart.length; i++){
+            str = str + " " + jobDataForChart[i][property];
+            }
+    
+            // console.log(str.split(' '));
+    
+            // Takes the string made from the for loop above and separates each word and its word count of 
+            //  each word and put them in their own array in the str array
+            let words = str.split(' ')
+            let count = {}
+            for(let word of words){
+                count[word] ? count[word]++ : count[word] = 1
+            }
+    
+            // console.log(count);
+            pushDataToChartVariables(count);
+}
 
+function pushDataToChartVariables(objectToPush) {
+    // This function will handle the pushing of data to the chart variables, and how many datasets it will display (topXResults).
+    // If words need to be filtered out, they need to be filtered out before this function is called
+    let topResults = findTopResultsInCountObjects();
+    if(topResults) {
+        for (let i = 0; i < topResults.length; i++) {
+            // Populate both arrays
+            let thisResult = topResults[i];
+            chartLabels.push(thisResult.property);
+            chartValues.push(thisResult.value);
+        }
+    }
+    else {
+        console.log("Can't push data to chart! topResults from findTopResultsInCountObjects: ", topResults);
+    }
+    
+    // This will find the 'topX' results from count objects, and return those.
+    function findTopResultsInCountObjects() {
+        let lastPlaceValue = 0;
+        let topResults = [];
+
+        for (let element in objectToPush) {
+            // element is the property
+            // objectToPush[element] is the value
+            if(objectToPush[element] > lastPlaceValue) {
+                topResults.push({property: element, value: objectToPush[element]}); // Push new result to topResult
+                topResults.sort((a, b) => (a.value > b.value) ? -1 : 1); // Sort topResults by descending order
+                if(topResults.length > resultsToDisplay) {
+                    topResults.pop(); // Remove last element in array
+                    lastPlaceValue = topResults[topResults.length - 1].value; // lastPlaceValue = the last place in topResults
+                }
+            }
+        }
+        return topResults;
+    }
+}
 
 //initializes select box
 $(document).ready(function(){
@@ -205,6 +237,14 @@ $(document).ready(function(){
 });
 
 // ANCHOR Event Listeners
+
+// nays code-- function to make dropdown work
+window.onload=function() { // when the page has loaded 
+    document.getElementById("select1").onchange=function() { 
+        property = this.value 
+        console.log (property)
+    } 
+} 
 
 // Go Button
 let goButtonEl = document.getElementById("go-button");
