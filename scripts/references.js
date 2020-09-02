@@ -21,3 +21,7 @@ var jobObjectTemplate = {
     postingURL: "",
     salary: 000 // Optional, some jobs may return null or 0
 }
+
+// Job Listing Template - clones the template into a variable, then removes the template from the html. We can still use the variable to make more listings
+var jobListingTemplate = $("#jobListingTemplate").clone();
+$("#jobListingTemplate").remove();
