@@ -3,7 +3,7 @@
 // - Let user save jobs to localstorage
 // Chart Analysis TODO ::
 // remove html tags from titles for accurate analylsis
-
+var str = "";
 var currentAdzunaResponse = {};
 let property = "description"
 // Chamber's Data
@@ -47,10 +47,28 @@ function makeAdzunaQuery(){
         makeChart();
 
             // This combines the descriptions from each job listing (multiple strings) into one string
-    for(var i = 0; i < response.results.length; i++){
+        
+        for(var i = 0; i < response.results.length; i++){
         str = str + " " + response.results[i].description
         }
         console.log(str);
+        console.log(str.split(" "));
+        // Chambers note: Takes a string and outputs an array of strings
+        // Stretch GOAL: add a way to make sure similar words are committed to the same word count
+        //ex. Making sure Work and work go together, maybe use something like toLowerCase();
+        function myFunction(input){
+        var words = input.match(/\w+/g);
+        let count = {}
+        for (let i = 0; i < words.length; i++) {
+           if (count[words[i]] === undefined) {
+            count[words[i]] = 1;
+           }
+           else {
+            count[words[i]]++;
+           }
+        }
+        return count;
+     }
     });
 }
 
@@ -168,26 +186,6 @@ function getFrequenciesOfProperties() {
 
 }
 
-
-// Chambers note: Takes a string and outputs an array of strings
-// Stretch GOAL: add a way to make sure similar words are committed to the same word count
-    //ex. Making sure Work and work go together, maybe use something like toLowerCase();
-    function myFunction(input){
-        const words = input.match(/\w+/g);
-        let counts = {}
-        for (let i = 0; i < words.length; i++) {
-           if (counts[words[i]] === undefined) {
-              counts[words[i]] = 1;
-           }
-           else {
-              counts[words[i]]++;
-           }
-        }
-        return counts;
-     }
-
-
-    
 
 
 //initializes select box
