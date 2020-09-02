@@ -166,7 +166,7 @@ function displayJobListings() {
         // Set the text/data of the new listing
         $(newListing).children("#listingTitle").text(jobDataForChart[i].title);
         $(newListing).children("#listingCompany").text(jobDataForChart[i].company);
-        $(newListing).children("#listingURL").text("View Posting").attr("href", jobDataForChart[i].postingURL);
+        $(newListing).children("#listingURL").children("a").text("View Posting").attr("href", jobDataForChart[i].postingURL);
         $(jobRowEl).find("tbody").append(newListing);
     }
 }
