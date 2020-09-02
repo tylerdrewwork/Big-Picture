@@ -3,7 +3,7 @@
 // - Let user save jobs to localstorage
 // Chart Analysis TODO ::
 // remove html tags from titles for accurate analylsis
-
+var str = "";
 var currentAdzunaResponse = {};
 let property = "description"
 // Chamber's Data
@@ -47,7 +47,8 @@ function makeAdzunaQuery(){
         makeChart();
 
             // This combines the descriptions from each job listing (multiple strings) into one string
-    for(var i = 0; i < response.results.length; i++){
+        
+        for(var i = 0; i < response.results.length; i++){
         str = str + " " + response.results[i].description
         }
         console.log(str);
