@@ -149,8 +149,8 @@ function getFrequenciesOfProperties() {
     }
 }
 
-// Takes a string and outputs an array of strings
-// Chambers function for grouping all words in the job descriptions
+
+// Chambers note: Takes a string and outputs an array of strings
 // Stretch GOAL: add a way to make sure similar words are committed to the same word count
     //ex. Making sure Work and work go together, maybe use something like toLowerCase();
     function myFunction(input){
