@@ -54,6 +54,9 @@ function makeAdzunaQuery(){
             getCountOfProperties();
         }
 
+        // Populates and displays job listing elements
+        displayJobListings();
+
         // And then create and display the chart
         updateChart();
 
@@ -155,6 +158,9 @@ function populateJobDataFromAdzuna(responsesToAdd) {
         }
 }
 
+function displayJobListings() {
+
+}
 
 // ANCHOR Analytical Functions to return information
 function getCountOfProperties() {

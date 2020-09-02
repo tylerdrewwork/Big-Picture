@@ -73,10 +73,12 @@
         </div>
       </div>
       <div class="row" id="job-row">
-        <div id="job-listing" class="col s12 design">job listings
-          <br>
-          <br>
-          <img src="https://via.placeholder.com/350" alt="placeholder">
+        <!-- maybe make a materialize table to hold all of these jobListings? -->
+        job listings 
+        <div id="jobListingTemplate" class="col s12 design job-listing"> <!-- this is the template for what will be duplicated for each job listing. this is the horizontal row-->
+          <span id="job-listing-title"></span>
+          <span id="job-listing-company"></span>
+          <span id="job-listing-url"></span>
         </div>
       </div>
 
