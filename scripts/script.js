@@ -46,29 +46,40 @@ function makeAdzunaQuery(){
         // And then create and display the chart
         makeChart();
 
-            // This combines the descriptions from each job listing (multiple strings) into one string
-        
+           
+        // This combines the descriptions from each job listing (multiple strings) into one string
         for(var i = 0; i < response.results.length; i++){
         str = str + " " + response.results[i].description
         }
-        console.log(str);
-        console.log(str.split(" "));
+
+        console.log(str.split(' '));
+
+        // Takes the string made from the for loop above and separates each word and its word count of 
+        //  each word and put them in their own array in the str array
+        let words = str.split(' ')
+        let count = {}
+        for(let word of words){
+            count[word] ? count[word]++ : count[word] = 1
+        }
+        console.log(count);
+
         // Chambers note: Takes a string and outputs an array of strings
         // Stretch GOAL: add a way to make sure similar words are committed to the same word count
         //ex. Making sure Work and work go together, maybe use something like toLowerCase();
-        function myFunction(input){
-        var words = input.match(/\w+/g);
-        let count = {}
-        for (let i = 0; i < words.length; i++) {
-           if (count[words[i]] === undefined) {
-            count[words[i]] = 1;
-           }
-           else {
-            count[words[i]]++;
-           }
-        }
-        return count;
-     }
+    //     function myFunction(input){
+    //     var words = input.match(/w+/g);
+    //     let count = {}
+    //     for (let i = 0; i < words.length; i++) {
+    //        if (count[words[i]] === undefined) {
+    //         count[words[i]] = 1;
+    //        }
+    //        else {
+    //         count[words[i]]++;
+    //        }
+    //     }
+    //     return count;
+    //  }
+ 
     });
 }
 
