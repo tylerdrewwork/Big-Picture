@@ -56,7 +56,7 @@ function makeAdzunaQuery(){
         // And then create and display the chart
         makeChart();
 
-        
+
         // Chambers note: Takes a string and outputs an array of strings
         // Stretch GOAL: add a way to make sure similar words are committed to the same word count
         //ex. Making sure Work and work go together, maybe use something like toLowerCase();
@@ -174,8 +174,9 @@ function getCountOfProperties() {
 
 function getCountOfWords() {
         // This combines the descriptions from each job listing (multiple strings) into one string
-        for(var i = 0; i < response.results.length; i++){
-            str = str + " " + response.results[i].description
+        // Chambers, I changed this from looping thru response.results to jobDataForChart (jobDataForChart has all of the information we need after filtering duplicated) - Tyler
+        for(var i = 0; i < jobDataForChart.length; i++){
+            str = str + " " + jobDataForChart[i][property];
             }
     
             // console.log(str.split(' '));
@@ -188,6 +189,7 @@ function getCountOfWords() {
                 count[word] ? count[word]++ : count[word] = 1
             }
     
+            // console.log(count);
             pushDataToChartVariables(count);
 }
 
@@ -220,8 +222,8 @@ function pushDataToChartVariables(objectToPush) {
                 topResults.sort((a, b) => (a.value > b.value) ? -1 : 1); // Sort topResults by descending order
                 if(topResults.length > resultsToDisplay) {
                     topResults.pop(); // Remove last element in array
+                    lastPlaceValue = topResults[topResults.length - 1].value; // lastPlaceValue = the last place in topResults
                 }
-                lastPlaceValue = topResults[topResults.length - 1].value; // lastPlaceValue = the last place in topResults
             }
         }
         return topResults;
