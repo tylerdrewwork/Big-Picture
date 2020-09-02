@@ -159,7 +159,9 @@ function populateJobDataFromAdzuna(responsesToAdd) {
 }
 
 function displayJobListings() {
-
+    for(let i = 0; i < jobDataForChart.length; i++) {
+        
+    }
 }
 
 // ANCHOR Analytical Functions to return information
