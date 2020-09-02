@@ -33,6 +33,7 @@ function makeAdzunaQuery(){
         method: "GET"
     }).then(function(response) {
         // Reset Chart and Count
+        jobDataForChart = [];
         chartLabels = [];
         chartValues = [];
 
@@ -54,7 +55,7 @@ function makeAdzunaQuery(){
         }
 
         // And then create and display the chart
-        makeChart();
+        updateChart();
 
 
         // Chambers note: Takes a string and outputs an array of strings

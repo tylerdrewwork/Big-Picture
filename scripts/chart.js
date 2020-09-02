@@ -1,14 +1,14 @@
-// set myChart as global variable 
-var myChart 
+// set myChart as global variable
+var myChart;
+var hasChartBeenMade = false;
 
-//create function for making chart so we can nest it into ajax on other script
 function makeChart() {
     var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: chartLabels,
-        datasets: [{
+    myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: chartLabels,
+            datasets: [{
             label: '# of Times Appeared in Searched Articles',
             data: chartValues,
             backgroundColor: [
@@ -30,17 +30,26 @@ function makeChart() {
             borderWidth: 1
         }]
     },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
-    }
-});
+    });
+}
 
+//create function for making chart so we can nest it into ajax on other script
+function updateChart() {
+    if(hasChartBeenMade === false) {
+        makeChart();
+    } else {
+        myChart.data.labels = chartLabels;
+        myChart.data.datasets[0].data = chartValues;
+    }
 }
 
 // a function that takes in a parameter and outputs an array of strings, which in this case will be words
