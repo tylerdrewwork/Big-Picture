@@ -10,8 +10,8 @@ let property = "description"
 var jobDataForChart = []; // Contains all of the "jobObjectTemplate" objects that have all the revised data for charts
 // The following 2 arrays contain the properties and values of the calculated mode of the jobDataForChart. 
 // DONT SORT THESE ARRAYS! They are paired in order (so index 0 on properties is paired with index 0 on values)
-var jobDataPropertyNames = [];
-var jobDataPropertyFrequencies = [];
+var chartLabels = [];
+var chartValues = [];
 
 // ANCHOR Queries 🤔
 function makeAdzunaQuery(){
@@ -190,8 +190,8 @@ function getFrequenciesOfProperties() {
 
     for (let element in propertyMapping) {
         // Populate both arrays
-        jobDataPropertyNames.push(element);
-        jobDataPropertyFrequencies.push(propertyMapping[element]);
+        chartLabels.push(element);
+        chartValues.push(propertyMapping[element]);
     }
 
 
