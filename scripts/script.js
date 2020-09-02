@@ -159,8 +159,15 @@ function populateJobDataFromAdzuna(responsesToAdd) {
 }
 
 function displayJobListings() {
+    let jobRowEl = document.getElementById("job-row");
     for(let i = 0; i < jobDataForChart.length; i++) {
-        
+        // Create a new listing by cloning the template variable
+        let newListing = $(jobListingTemplate).clone();
+        // Set the text/data of the new listing
+        $(newListing).children("#listingTitle").text(jobDataForChart[i].title);
+        $(newListing).children("#listingCompany").text(jobDataForChart[i].company);
+        $(newListing).children("#listingURL").text("View Posting").attr("href", jobDataForChart[i].postingURL);
+        $(jobRowEl).find("tbody").append(newListing);
     }
 }
 
