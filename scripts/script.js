@@ -5,7 +5,7 @@
 // remove html tags from titles for accurate analylsis
 
 var currentAdzunaResponse = {};
-
+let property = "title"
 // Chamber's Data
 var jobDataForChart = []; // Contains all of the "jobObjectTemplate" objects that have all the revised data for charts
 // The following 2 arrays contain the properties and values of the calculated mode of the jobDataForChart. 
@@ -128,7 +128,8 @@ function populateJobDataFromAdzuna(responsesToAdd) {
     // nays code-- function to make dropdown work
     window.onload=function() { // when the page has loaded 
         document.getElementById("select1").onchange=function() { 
-          console.log (this.value)
+        property = this.value 
+        console.log (property)
         } 
       } 
 
