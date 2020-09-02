@@ -191,14 +191,16 @@ function getFrequenciesOfProperties() {
     }
 }
 
-function pushDataToChartVariables(objectToPush, topXResults) {
+function pushDataToChartVariables(objectToPush) {
     // This function will handle the pushing of data to the chart variables, and how many datasets it will display (topXResults).
+    // If words need to be filtered out, they need to be filtered out before this function is called
     let topResults = findTopResultsInCountObjects();
     if(topResults) {
-        for (let element in topResults) {
+        for (let i = 0; i < topResults.length; i++) {
             // Populate both arrays
-            chartLabels.push(element);
-            chartValues.push(topResults[element]);
+            let thisResult = topResults[i];
+            chartLabels.push(thisResult.property);
+            chartValues.push(thisResult.value);
         }
     }
     else {
@@ -220,18 +222,21 @@ function pushDataToChartVariables(objectToPush, topXResults) {
             // element is the property
             // objectToPush[element] is the value
             if(objectToPush[element] > lastPlaceValue) {
+                console.log("running")
                 // lastPlace.property = element;
                 // lastPlace.value = objectToPush[element];
                 topResults.push({property: element, value: objectToPush[element]}); // Push new result to topResult
                 topResults.sort((a, b) => (a.value > b.value) ? -1 : 1); // Sort topResults by descending order
-                if(topResults.length > topXResults) {
-                    topResults = topResults.pop(); // Remove last element in array
+                if(topResults.length > resultsToDisplay) {
+                    console.log("too long! length:", topResults.length)
+                    topResults.pop(); // Remove last element in array
                 }
                 lastPlaceValue = topResults[topResults.length - 1].value;
                 
                 console.log(topResults);
             }
         }
+        return topResults;
     }
 }
 
