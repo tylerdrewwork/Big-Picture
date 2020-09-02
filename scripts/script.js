@@ -56,7 +56,7 @@ function makeAdzunaQuery(){
         str = str + " " + response.results[i].description
         }
 
-        console.log(str.split(' '));
+        // console.log(str.split(' '));
 
         // Takes the string made from the for loop above and separates each word and its word count of 
         //  each word and put them in their own array in the str array
@@ -65,7 +65,9 @@ function makeAdzunaQuery(){
         for(let word of words){
             count[word] ? count[word]++ : count[word] = 1
         }
-        console.log(count);
+
+        pushDataToChartVariables(count);
+        // console.log(count);
 
         // Chambers note: Takes a string and outputs an array of strings
         // Stretch GOAL: add a way to make sure similar words are committed to the same word count
@@ -178,8 +180,6 @@ function getFrequenciesOfProperties() {
     // TODO Nay, can you please let the following variable (property) equal whatever dropdown is selected?
     // So if category is selected, then it equals "category"
 
-
-
     let propertyMapping = {}; // This records the frequency of the key
     
     // Get the frequency of keys in job data
@@ -197,11 +197,47 @@ function getFrequenciesOfProperties() {
         chartLabels.push(element);
         chartValues.push(propertyMapping[element]);
     }
-
-
 }
 
+function pushDataToChartVariables(objectToPush, topXResults) {
+    // This function will handle the pushing of data to the chart variables, and how many datasets it will display (topXResults).
+    let topResults = findTopResultsInCountObjects();
+    if(topResults) {
+        for (let element in topResults) {
+            // Populate both arrays
+            chartLabels.push(element);
+            chartValues.push(topResults[element]);
+        }
+    }
+    else {
+        console.log("Can't push data to chart! topResults from findTopResultsInCountObjects: ", topResults);
+    }
 
+    function findTopResultsInCountObjects() {
+        // This will find the 'topX' results from count objects, and return those.
+        /* Tylers pseudocode:
+        - lastPlace: create object that tracks the last place property and value in top results (the lowest value out of the current highest results)
+        - go through all the objects
+        - if the objects value is greater than last place, kick out last place and put in this object
+        - if the objects value is less than last place, continue
+        */
+        let lastPlace = {property: undefined, value: 0};
+        let topResults = [];
+
+        for (let element in objectToPush) {
+            // element is the property
+            // objectToPush[element] is the value
+            if(objectToPush[element] > lastPlace.value) {
+                // lastPlace.property = element;
+                // lastPlace.value = objectToPush[element];
+                topResults.push({property: element, value: objectToPush[element]}); // Push new result to topResult
+                topResults.sort((a, b) => (a.value > b.value) ? -1 : 1); // Sort topResults by descending order
+                if(topResults.length)
+                console.log(topResults);
+            }
+        }
+    }
+}
 
 //initializes select box
 $(document).ready(function(){
