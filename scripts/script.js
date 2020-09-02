@@ -158,6 +158,12 @@ function getFrequenciesOfProperties() {
         jobDataPropertyNames.push(element);
         jobDataPropertyFrequencies.push(propertyMapping[element]);
     }
+
+    // This combines the descriptions from each job listing (multiple strings) into one string
+    for(var i = 0; i < response.results.length; i++){
+        str = str + " " + response.results[i].description
+        }
+        console.log
 }
 
 
@@ -178,7 +184,10 @@ function getFrequenciesOfProperties() {
         return counts;
      }
 
-makeAdzunaQuery("us", 100, "engineer");
+
+    
+
+
 //initializes select box
 $(document).ready(function(){
     $('select').formSelect();
