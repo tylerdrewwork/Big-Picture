@@ -22,7 +22,6 @@
     <div class="nav-wrapper">
       <a href="#" id="brand-logo" class="brand-logo center">big picture</a>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
-        <li><a id="contact" href="sass.html">contact</a></li>
       </ul>
     </div>
   </nav>
@@ -30,7 +29,7 @@
   <!-- end nav bar -->
 
 
-<div class="container">
+  <div class="container">
 
     <main>
 
@@ -44,82 +43,59 @@
         <div class=" col s5 filters search-container">
           <div class="input-field">
             <select id="select1">
-              <option value="" disabled selected></option>
-              <option data-property="title" value="1">title</option>
-              <option data-property="Description" value="2">description</option>
-              <option data-property="Company" value="3">company</option>
-              <option data-property="Country" value="4">country</option>
-              <option data-property="State" value="5">state</option>
-              <option data-property="City" value="6">city</option>
-              <option data-property="Date" value="7">date</option>
-              <option data-property="PostingURL" value="8">postingURL</option>
+              <option value="description" disabled selected></option>
+              <option value="title">title</option>
+              <option value="description">description</option>
+              <option value="company">company</option>
+              <option value="country">country</option>
+              <option value="state">state</option>
+              <option value="city">city</option>
+              <!-- <option value="date">date</option>
+              <option value="postingURL">postingURL</option> -->
             </select>
             <label class="text-black">choose how to filter the info</label>
           </div>
         </div>
 
         <div class="col s2 go">
-          <a class="waves-effect waves-light green-darken-3 btn-large" id="go-button">search!</a>
+          <a class="waves-effect waves-light green-darken-3 btn-large" id="go-button">go!</a>
         </div>
-        
+
       </div>
-      
 
-      <!-- go button -->
-<!-- 
-      <div class="row">
-          <div class="col s3 go">
-            <a class="waves-effect waves-light green-darken-3 btn-large" id="go-button">Search!</a>
-          </div>
-
-      </div> -->
 
       <div class="row" id="graph-row">
-        
+        <div class="col s12 design">graph
+          <br>
+          <br>
+          <canvas id="myChart" width="300" height="300"></canvas>
+
+        </div>
       </div>
       <div class="row" id="job-row">
-        <div class="col s12 design">job listings
+        <div id="job-listing" class="col s12 design">job listings
           <br>
           <br>
-          <img src="https://via.placeholder.com/350" alt="placeholder"> 
+          <img src="https://via.placeholder.com/350" alt="placeholder">
         </div>
       </div>
 
 
-    </div>
-    </main>
+  </div>
+  </main>
   </div>
   <footer class="page-footer">
     <div class="container">
       <div class="row">
         <div class="col s6">
           <h5 id="footer-header">big picture</h5>
+          <br>
           <p class="grey-text text-lighten-4">simplifying the hunt.</p>
-          <p class="grey-text text-lighten-4">© 2014 copyright CMNT</p>
+          <p class="grey-text text-lighten-4">© 2020 copyright CMNT</p>
         </div>
       </div>
     </div>
   </footer>
-
-
-
-
-
-  <!-- <div class="parallax-container">
-        <div class="parallax"><img src="images/parallax1.jpg"></div>
-      </div>
-      <div class="section white">
-        <div class="row container">
-          <h2 class="header">Parallax</h2>
-          <p class="grey-text text-darken-3 lighten-3">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>
-        </div>
-      </div>
-      <div class="parallax-container">
-        <div class="parallax"><img src="images/parallax2.jpg"></div>
-      </div>
-          
- -->
-
 
 
   <!-- Jquery -->

@@ -43,3 +43,4 @@ function makeChart() {
 
 }
 
+// a function that takes in a parameter and outputs an array of strings, which in this case will be words
