@@ -73,11 +73,25 @@
         </div>
       </div>
       <div class="row" id="job-row">
-        <div id="job-listing" class="col s12 design">job listings
-          <br>
-          <br>
-          <img src="https://via.placeholder.com/350" alt="placeholder">
-        </div>
+        <!-- maybe make a materialize table to hold all of these jobListings? -->
+        job listings 
+        <table class="striped centered responsive-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Company</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr id="jobListingTemplate" class="col s12 design job-listing">
+              <td id="listingTitle">Title</td>
+              <td id="listingCompany">Company</td>
+              <td id="listingURL"><a href="" target="_blank">URL</a></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
 
