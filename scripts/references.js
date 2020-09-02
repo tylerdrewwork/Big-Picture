@@ -5,6 +5,8 @@ var adzunaAppID = "b93209db";
 var adzunaAPIKey = "4e1dc99959c3767a4c19aef7dcbad4e2";
 var usaJobsAPIKey = "4ZsA1lOV8U0e56lLGm0c7oIPOIb+mRRzXfh+zdN30/w=";
 
+// Options
+var resultsToDisplay = 10;
 
 // Chart Job Object
 var jobObjectTemplate = {
