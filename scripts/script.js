@@ -32,6 +32,10 @@ function makeAdzunaQuery(){
         url: URL,
         method: "GET"
     }).then(function(response) {
+        // Reset Chart and Count
+        chartLabels = [];
+        chartValues = [];
+
         console.log("Adzuna Response: ", response);
         
         // responsesToAdd, a new variable that lets us pick the responses we want to use
