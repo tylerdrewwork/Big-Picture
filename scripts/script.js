@@ -56,6 +56,8 @@ function makeAdzunaQuery(){
 
         // Takes the string made from the for loop above and separates each word and its word count of 
         //  each word and put them in their own array in the str array
+            // Stretch GOAL: add a way to make sure similar words are committed to the same word count
+            //ex. Making sure Work and work go together, maybe use something like toLowerCase();
         let words = str.split(' ')
         let count = {}
         for(let word of words){
@@ -63,23 +65,6 @@ function makeAdzunaQuery(){
         }
         console.log(count);
 
-        // Chambers note: Takes a string and outputs an array of strings
-        // Stretch GOAL: add a way to make sure similar words are committed to the same word count
-        //ex. Making sure Work and work go together, maybe use something like toLowerCase();
-    //     function myFunction(input){
-    //     var words = input.match(/w+/g);
-    //     let count = {}
-    //     for (let i = 0; i < words.length; i++) {
-    //        if (count[words[i]] === undefined) {
-    //         count[words[i]] = 1;
-    //        }
-    //        else {
-    //         count[words[i]]++;
-    //        }
-    //     }
-    //     return count;
-    //  }
- 
     });
 }
 
