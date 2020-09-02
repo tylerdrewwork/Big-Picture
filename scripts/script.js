@@ -45,6 +45,12 @@ function makeAdzunaQuery(){
 
         // And then create and display the chart
         makeChart();
+
+            // This combines the descriptions from each job listing (multiple strings) into one string
+    for(var i = 0; i < response.results.length; i++){
+        str = str + " " + response.results[i].description
+        }
+        console.log(str);
     });
 }
 
@@ -159,11 +165,7 @@ function getFrequenciesOfProperties() {
         jobDataPropertyFrequencies.push(propertyMapping[element]);
     }
 
-    // This combines the descriptions from each job listing (multiple strings) into one string
-    for(var i = 0; i < response.results.length; i++){
-        str = str + " " + response.results[i].description
-        }
-        console.log
+
 }
 
 
