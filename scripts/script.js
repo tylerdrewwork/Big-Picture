@@ -52,22 +52,22 @@ function makeAdzunaQuery(){
         str = str + " " + response.results[i].description
         }
         console.log(str);
-
+        console.log(str.split(" "));
         // Chambers note: Takes a string and outputs an array of strings
         // Stretch GOAL: add a way to make sure similar words are committed to the same word count
         //ex. Making sure Work and work go together, maybe use something like toLowerCase();
         function myFunction(input){
         var words = input.match(/\w+/g);
-        let str = {}
+        let count = {}
         for (let i = 0; i < words.length; i++) {
-           if (str[words[i]] === undefined) {
-              str[words[i]] = 1;
+           if (count[words[i]] === undefined) {
+            count[words[i]] = 1;
            }
            else {
-              str[words[i]]++;
+            count[words[i]]++;
            }
         }
-        return str;
+        return count;
      }
     });
 }
