@@ -5,7 +5,7 @@
 // remove html tags from titles for accurate analylsis
 
 var currentAdzunaResponse = {};
-
+let property = "title"
 // Chamber's Data
 var jobDataForChart = []; // Contains all of the "jobObjectTemplate" objects that have all the revised data for charts
 // The following 2 arrays contain the properties and values of the calculated mode of the jobDataForChart. 
@@ -125,11 +125,22 @@ function populateJobDataFromAdzuna(responsesToAdd) {
         }
 }
 
+    // nays code-- function to make dropdown work
+    window.onload=function() { // when the page has loaded 
+        document.getElementById("select1").onchange=function() { 
+        property = this.value 
+        console.log (property)
+        } 
+      } 
+
+
 // ANCHOR Analytical Functions to return information
 function getFrequenciesOfProperties() {
     // TODO Nay, can you please let the following variable (property) equal whatever dropdown is selected?
     // So if category is selected, then it equals "category"
-    let property = "";
+
+
+
     let propertyMapping = {}; // This records the frequency of the key
     
     // Get the frequency of keys in job data
