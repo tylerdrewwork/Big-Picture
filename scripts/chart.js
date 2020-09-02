@@ -49,7 +49,6 @@ function updateChart() {
     } else {
         myChart.data.labels = chartLabels;
         myChart.data.datasets[0].data = chartValues;
-        myChart.update();
     }
 }
 
