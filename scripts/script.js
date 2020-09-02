@@ -5,7 +5,7 @@
 // remove html tags from titles for accurate analylsis
 
 var currentAdzunaResponse = {};
-let property = "title"
+let property = "description"
 // Chamber's Data
 var jobDataForChart = []; // Contains all of the "jobObjectTemplate" objects that have all the revised data for charts
 // The following 2 arrays contain the properties and values of the calculated mode of the jobDataForChart. 

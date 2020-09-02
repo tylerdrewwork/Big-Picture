@@ -143,6 +143,7 @@ main {
 }
 
 .btn-large {
+text-transform: lowercase !important;
 background-color:rgb(26,86,29);
 }
 
