@@ -44,31 +44,19 @@ function makeAdzunaQuery(){
         // then, populate the job data array using those new responses
         populateJobDataFromAdzuna(responsesToAdd);
 
-        // After that, get the frequencies of all the properties
-        getFrequenciesOfProperties();
+        if(property === "title" || property === "description") {
+            // If we're sorting by title or description, get the counts of individual words
+            getCountOfWords();
+        }
+        else {
+            // Otherwise, get the count of the full strings
+            getCountOfProperties();
+        }
 
         // And then create and display the chart
         makeChart();
 
-           
-        // This combines the descriptions from each job listing (multiple strings) into one string
-        for(var i = 0; i < response.results.length; i++){
-        str = str + " " + response.results[i].description
-        }
-
-        // console.log(str.split(' '));
-
-        // Takes the string made from the for loop above and separates each word and its word count of 
-        //  each word and put them in their own array in the str array
-        let words = str.split(' ')
-        let count = {}
-        for(let word of words){
-            count[word] ? count[word]++ : count[word] = 1
-        }
-
-        pushDataToChartVariables(count);
-        // console.log(count);
-
+        
         // Chambers note: Takes a string and outputs an array of strings
         // Stretch GOAL: add a way to make sure similar words are committed to the same word count
         //ex. Making sure Work and work go together, maybe use something like toLowerCase();
@@ -168,10 +156,7 @@ function populateJobDataFromAdzuna(responsesToAdd) {
 
 
 // ANCHOR Analytical Functions to return information
-function getFrequenciesOfProperties() {
-    // TODO Nay, can you please let the following variable (property) equal whatever dropdown is selected?
-    // So if category is selected, then it equals "category"
-
+function getCountOfProperties() {
     let propertyMapping = {}; // This records the frequency of the key
     
     // Get the frequency of keys in job data
@@ -184,11 +169,26 @@ function getFrequenciesOfProperties() {
         propertyMapping[thisProperty] ++;
     }
     
-    for (let element in propertyMapping) {
-        // Populate both arrays
-        chartLabels.push(element);
-        chartValues.push(propertyMapping[element]);
-    }
+    pushDataToChartVariables(propertyMapping);
+}
+
+function getCountOfWords() {
+        // This combines the descriptions from each job listing (multiple strings) into one string
+        for(var i = 0; i < response.results.length; i++){
+            str = str + " " + response.results[i].description
+            }
+    
+            // console.log(str.split(' '));
+    
+            // Takes the string made from the for loop above and separates each word and its word count of 
+            //  each word and put them in their own array in the str array
+            let words = str.split(' ')
+            let count = {}
+            for(let word of words){
+                count[word] ? count[word]++ : count[word] = 1
+            }
+    
+            pushDataToChartVariables(count);
 }
 
 function pushDataToChartVariables(objectToPush) {
@@ -207,14 +207,8 @@ function pushDataToChartVariables(objectToPush) {
         console.log("Can't push data to chart! topResults from findTopResultsInCountObjects: ", topResults);
     }
     
+    // This will find the 'topX' results from count objects, and return those.
     function findTopResultsInCountObjects() {
-        // This will find the 'topX' results from count objects, and return those.
-        /* Tylers pseudocode:
-        - lastPlace: create object that tracks the last place property and value in top results (the lowest value out of the current highest results)
-        - go through all the objects
-        - if the objects value is greater than last place, kick out last place and put in this object
-        - if the objects value is less than last place, continue
-        */
         let lastPlaceValue = 0;
         let topResults = [];
 
@@ -222,18 +216,12 @@ function pushDataToChartVariables(objectToPush) {
             // element is the property
             // objectToPush[element] is the value
             if(objectToPush[element] > lastPlaceValue) {
-                console.log("running")
-                // lastPlace.property = element;
-                // lastPlace.value = objectToPush[element];
                 topResults.push({property: element, value: objectToPush[element]}); // Push new result to topResult
                 topResults.sort((a, b) => (a.value > b.value) ? -1 : 1); // Sort topResults by descending order
                 if(topResults.length > resultsToDisplay) {
-                    console.log("too long! length:", topResults.length)
                     topResults.pop(); // Remove last element in array
                 }
-                lastPlaceValue = topResults[topResults.length - 1].value;
-                
-                console.log(topResults);
+                lastPlaceValue = topResults[topResults.length - 1].value; // lastPlaceValue = the last place in topResults
             }
         }
         return topResults;
