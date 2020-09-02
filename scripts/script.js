@@ -166,14 +166,6 @@ function populateJobDataFromAdzuna(responsesToAdd) {
         }
 }
 
-    // nays code-- function to make dropdown work
-    window.onload=function() { // when the page has loaded 
-        document.getElementById("select1").onchange=function() { 
-        property = this.value 
-        console.log (property)
-        } 
-      } 
-
 
 // ANCHOR Analytical Functions to return information
 function getFrequenciesOfProperties() {
@@ -191,7 +183,7 @@ function getFrequenciesOfProperties() {
         }
         propertyMapping[thisProperty] ++;
     }
-
+    
     for (let element in propertyMapping) {
         // Populate both arrays
         chartLabels.push(element);
@@ -212,7 +204,7 @@ function pushDataToChartVariables(objectToPush, topXResults) {
     else {
         console.log("Can't push data to chart! topResults from findTopResultsInCountObjects: ", topResults);
     }
-
+    
     function findTopResultsInCountObjects() {
         // This will find the 'topX' results from count objects, and return those.
         /* Tylers pseudocode:
@@ -221,18 +213,22 @@ function pushDataToChartVariables(objectToPush, topXResults) {
         - if the objects value is greater than last place, kick out last place and put in this object
         - if the objects value is less than last place, continue
         */
-        let lastPlace = {property: undefined, value: 0};
+        let lastPlaceValue = 0;
         let topResults = [];
 
         for (let element in objectToPush) {
             // element is the property
             // objectToPush[element] is the value
-            if(objectToPush[element] > lastPlace.value) {
+            if(objectToPush[element] > lastPlaceValue) {
                 // lastPlace.property = element;
                 // lastPlace.value = objectToPush[element];
                 topResults.push({property: element, value: objectToPush[element]}); // Push new result to topResult
                 topResults.sort((a, b) => (a.value > b.value) ? -1 : 1); // Sort topResults by descending order
-                if(topResults.length)
+                if(topResults.length > topXResults) {
+                    topResults = topResults.pop(); // Remove last element in array
+                }
+                lastPlaceValue = topResults[topResults.length - 1].value;
+                
                 console.log(topResults);
             }
         }
@@ -245,6 +241,14 @@ $(document).ready(function(){
 });
 
 // ANCHOR Event Listeners
+
+// nays code-- function to make dropdown work
+window.onload=function() { // when the page has loaded 
+    document.getElementById("select1").onchange=function() { 
+        property = this.value 
+        console.log (property)
+    } 
+} 
 
 // Go Button
 let goButtonEl = document.getElementById("go-button");
