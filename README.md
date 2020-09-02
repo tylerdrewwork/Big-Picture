@@ -19,7 +19,7 @@ Track jobs around the world and provide a graph with different descriptors that 
 ##### Noteworthy:
 - Created with materialize style
 - Custom graph charts with various color schemes
-- Links to job URL'S that were given through Adzuna  API
+- Links to job URL'S that were given through Adzuna  API 
 
 ## Execution:
 
