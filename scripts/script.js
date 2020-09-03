@@ -188,6 +188,13 @@ function getCountOfProperties() {
     pushDataToChartVariables(propertyMapping);
 }
 
+function filterWordCount() {
+    if (!forbiddenWordsArray.includes(allWords[i])) {
+        newArray.push(allWords[i])
+      }
+}
+
+
 function getCountOfWords() {
         // This combines the descriptions from each job listing (multiple strings) into one string
         // Chambers, I changed this from looping thru response.results to jobDataForChart (jobDataForChart has all of the information we need after filtering duplicated) - Tyler
@@ -197,6 +204,8 @@ function getCountOfWords() {
     
             // console.log(str.split(' '));
     
+            // There is where the filter word count will be placed
+
             // Takes the string made from the for loop above and separates each word and its word count of 
             //  each word and put them in their own array in the str array
             let words = str.split(' ')
