@@ -1,7 +1,3 @@
-// Overall TODO ::
-// - Let user filter by location (city, state) instead of just country
-// - Let user save jobs to localstorage
-// Chart Analysis TODO ::
 // remove html tags from titles for accurate analylsis
 var str = "";
 var currentAdzunaResponse = {};
@@ -173,7 +169,7 @@ function getCountOfProperties() {
 
 // if the word is not included in the forbiddenWordsArray, push that word to the newArray
 function filterWordCount(unfilteredWords) {
-    var forbiddenWordsArray = ['<strong>','</strong>','and','to','in','a','...',' ','the','<strong>Developer</strong>','<strong>developer</strong>']
+    var forbiddenWordsArray = ['<strong>','</strong>','and','to','in','a','...',' ','the','<strong>Developer</strong>','<strong>developer</strong>','&','-','=','as','then','this','be','.',',','/','\','[','],'on','our']
     var filteredWords = []
     for (i = 0; i < unfilteredWords.length; i++) {
         if (!forbiddenWordsArray.includes(unfilteredWords[i])) {
@@ -245,15 +241,6 @@ function pushDataToChartVariables(objectToPush) {
         return topResults;
     }
 }
-
-//filter system
-// var allWords = [..this comes from the 3rd party API..];
-// var eligibleKeyWords = []; // a fresh array
-// var ineligibleKeyWords = ["and", "...", "the", "to", "for", ..... etc ];
-
-// for loop...
-//   if allWords[i] is NOT in ineligibleKeyWords array
-//     push to the new eligibleKeyWords array  
 
 //initializes select box
 $(document).ready(function(){
