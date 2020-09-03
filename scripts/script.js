@@ -142,6 +142,7 @@ function populateJobDataFromAdzuna(responsesToAdd) {
 
 function displayJobListings() {
     let jobRowEl = document.getElementById("job-row");
+    $(jobRowEl).find("tbody").empty();
     for(let i = 0; i < jobDataForChart.length; i++) {
         // Create a new listing by cloning the template variable
         let newListing = $(jobListingTemplate).clone();
