@@ -1,4 +1,4 @@
-![Alt Text](image-link)
+![Alt Text]()
 
 ---
 
