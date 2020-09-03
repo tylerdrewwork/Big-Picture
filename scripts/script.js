@@ -28,10 +28,16 @@ function makeAdzunaQuery(){
     let URL = "https://api.adzuna.com/v1/api/jobs/" + countryCode + "/search/1?app_id=" + adzunaAppID + "&app_key=" + adzunaAPIKey + 
         "&results_per_page=" + resultsToAnalyze + "&what=" + keywordsToSearch + "&title_only=" + titleToSearch;
 
+    // Show Loading Symbol
+    $("#spinner").attr("data-active", true);
+
     $.ajax({
         url: URL,
         method: "GET"
     }).then(function(response) {
+        // Hide Loading Symbol
+        $("#spinner").attr("data-active", false);
+
         // Reset Chart and Count
         jobDataForChart = [];
         chartLabels = [];
