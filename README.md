@@ -1,4 +1,4 @@
-![Alt Text]()
+
 
 ---
 
@@ -33,5 +33,3 @@ Track jobs around the world and provide a graph with different descriptors that 
 - Linked Adzuna job listing sites to job listings card
 - Added motivational quote API that was then added to the top of the page 
 - Styled chart and job listings to make it more clean
-
-### Things We learned
