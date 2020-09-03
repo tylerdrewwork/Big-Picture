@@ -114,11 +114,11 @@ main {
     width: 120px;
     height: 120px;
     animation: spin 2s linear infinite;
-  }
-  @keyframes spin {
+}
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
   
 .text-black {
 
@@ -143,12 +143,23 @@ main {
 }
 
 .btn-large {
-text-transform: lowercase !important;
-background-color:rgb(26,86,29);
+    text-transform: lowercase !important;
+    background-color:rgb(26,86,29);
 }
 
 .page-footer {
     background-color: black;
     color: rgb(235,228,220);
     display: inline;
+}
+
+.motivational-quote {
+    text-align: center;
+    margin-bottom: 15px;
+    color: gray;
+    padding: 0px 20px;
+}
+
+#quote-author {
+    font-style: italic;
 }
