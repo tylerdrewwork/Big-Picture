@@ -172,15 +172,17 @@ function getCountOfProperties() {
 
 
 // if the word is not included in the forbiddenWordsArray, push that word to the newArray
-function filterWordCount() {
-    var forbiddenWordsArray = ['<strong>','</strong>','and','to','in']
-    let unfilteredWords = str.split(' ')
-    
-    if (!forbiddenWordsArray.includes(unfilteredWords[i])) {
-        filteredWords.push(unfilteredWords[i])
-      }
-
-}
+function filterWordCount(unfilteredWords) {
+    var forbiddenWordsArray = ['<strong>','</strong>','and','to','in','a','...',' ','the','<strong>Developer</strong>','<strong>developer</strong>']
+    var filteredWords = []
+    for (i = 0; i < unfilteredWords.length; i++) {
+        if (!forbiddenWordsArray.includes(unfilteredWords[i])) {
+            filteredWords.push(unfilteredWords[i])
+          }
+       
+    }
+    return filteredWords;
+}   
 
 
 function getCountOfWords() {
@@ -192,12 +194,11 @@ function getCountOfWords() {
     
      console.log(str.split(' '));
     
-    // There is where the filter word count will be placed
-
+    
     // Takes the string made from the for loop above and separates each word and its word count of 
     //  each word and put them in their own array in the str array
     let unfilteredWords = str.split(' ')
-    let filteredWords = [' '];
+    let filteredWords = filterWordCount(unfilteredWords);
     let count = {}
     for(let word of filteredWords){
         count[word] ? count[word]++ : count[word] = 1
@@ -206,6 +207,7 @@ function getCountOfWords() {
     console.log(count);
     pushDataToChartVariables(count);
 }
+
 
 function pushDataToChartVariables(objectToPush) {
     // This function will handle the pushing of data to the chart variables, and how many datasets it will display (topXResults).
