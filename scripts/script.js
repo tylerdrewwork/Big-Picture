@@ -18,7 +18,7 @@ function makeAdzunaQuery(){
     let searchBarEl = document.getElementById("search-bar");
 
     let countryCode = "us";
-    let resultsToAnalyze = 25;
+    let resultsToAnalyze = 50;
     let titleToSearch = "";
     let keywordsToSearch = searchBarEl.value;
 
@@ -228,6 +228,15 @@ function pushDataToChartVariables(objectToPush) {
         return topResults;
     }
 }
+
+//filter system
+// var allWords = [..this comes from the 3rd party API..];
+// var eligibleKeyWords = []; // a fresh array
+// var ineligibleKeyWords = ["and", "...", "the", "to", "for", ..... etc ];
+
+// for loop...
+//   if allWords[i] is NOT in ineligibleKeyWords array
+//     push to the new eligibleKeyWords array  
 
 //initializes select box
 $(document).ready(function(){
