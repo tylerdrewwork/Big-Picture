@@ -18,7 +18,7 @@ function makeAdzunaQuery(){
     let searchBarEl = document.getElementById("search-bar");
 
     let countryCode = "us";
-    let resultsToAnalyze = 25;
+    let resultsToAnalyze = 50;
     let titleToSearch = "";
     let keywordsToSearch = searchBarEl.value;
 
