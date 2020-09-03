@@ -3,7 +3,7 @@
 ---
 
 # Big Picture
-
+![Alt Text](assets/Preview.png)
 ### [Click Here To Start](https://sakiskid.github.io/Big-Picture/)
 
 9/3/2020 
