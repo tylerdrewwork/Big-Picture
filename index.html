@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./Assets/reset.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Eczar:wght@400&family=Rubik&display=swap" rel="stylesheet">
-  <link rel="icon" href="./Assets/big.png">
+  <link rel="icon" href="./Assets/biglogo.png">
   <link rel="stylesheet" href="./Assets/styles.css">
   <title>big picture</title>
 </head>
@@ -20,6 +20,7 @@
   <!-- nav bar -->
   <nav>
     <div class="nav-wrapper">
+      <img class="big-logo" src="./Assets/biglogo.png" alt="big-logo">
       <a href="#" id="brand-logo" class="brand-logo center">big picture</a>
       <ul id="nav-mobile" class="left hide-on-med-and-down">
       </ul>
@@ -73,26 +74,27 @@
         <div class="col s12 design">graph
           <br>
           <br>
+          <div class="spinner"> <img class="big-logo-loader" src="./Assets/biglogo.png" alt="big-logo"></div>
           <canvas id="myChart" width="300" height="300"></canvas>
 
         </div>
       </div>
       <div class="row" id="job-row">
         <!-- maybe make a materialize table to hold all of these jobListings? -->
-        job listings 
-        <table class="striped centered responsive-table">
+       <p class="design">job listings </p> 
+        <table class="striped centered responsive-table design2">
           <thead>
-            <tr>
-              <th>Title</th>
-              <th>Company</th>
+            <tr class="design2">
+              <th>title</th>
+              <th>company</th>
               <th>URL</th>
             </tr>
           </thead>
 
           <tbody>
-            <tr id="jobListingTemplate" class="col s12 design job-listing">
-              <td id="listingTitle">Title</td>
-              <td id="listingCompany">Company</td>
+            <tr id="jobListingTemplate" class="col s12 design2 job-listing">
+              <td id="listingTitle">title</td>
+              <td id="listingCompany">company</td>
               <td id="listingURL"><a href="" target="_blank">URL</a></td>
             </tr>
           </tbody>
@@ -110,6 +112,7 @@
           <h5 id="footer-header">big picture</h5>
           <br>
           <p class="grey-text text-lighten-4">simplifying the hunt.</p>
+          <br>
           <p class="grey-text text-lighten-4">© 2020 copyright CMNT</p>
         </div>
       </div>
