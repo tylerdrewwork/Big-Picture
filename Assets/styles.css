@@ -110,7 +110,6 @@ main {
   
 .text-black {
     color: black !important;
-
 }
 
 
@@ -158,8 +157,10 @@ main {
     font-style: italic;
 }
 
-.spinner {
-   
+#spinner {
+    opacity: 0%;
+    transition: opacity 1.5s;
+
     margin: 0px auto;
     margin-top: 20px;
     height:80px;
@@ -174,6 +175,10 @@ main {
     border-bottom:6px solid rgba(0,174,239,.15);
     border-top:6px solid rgba(29, 141, 19, 0.8);
     border-radius:100%;
+}
+
+#spinner[data-active="true"] {
+    opacity: 100%;
  }
  
  @-webkit-keyframes rotation {
@@ -201,7 +206,6 @@ main {
     margin-right: 8px;
     margin-bottom: 8px;
     opacity: 50%;
-    
 }
 
 .big-logo {
@@ -211,6 +215,4 @@ main {
     margin-left: 12px;
     margin-right: 12px;
     opacity: 100%;
-    
 }
-

@@ -1,7 +1,3 @@
-// Overall TODO ::
-// - Let user filter by location (city, state) instead of just country
-// - Let user save jobs to localstorage
-// Chart Analysis TODO ::
 // remove html tags from titles for accurate analylsis
 var str = "";
 var currentAdzunaResponse = {};
@@ -28,10 +24,16 @@ function makeAdzunaQuery(){
     let URL = "https://api.adzuna.com/v1/api/jobs/" + countryCode + "/search/1?app_id=" + adzunaAppID + "&app_key=" + adzunaAPIKey + 
         "&results_per_page=" + resultsToAnalyze + "&what=" + keywordsToSearch + "&title_only=" + titleToSearch;
 
+    // Show Loading Symbol
+    $("#spinner").attr("data-active", true);
+
     $.ajax({
         url: URL,
         method: "GET"
     }).then(function(response) {
+        // Hide Loading Symbol
+        $("#spinner").attr("data-active", false);
+
         // Reset Chart and Count
         jobDataForChart = [];
         chartLabels = [];
@@ -59,7 +61,6 @@ function makeAdzunaQuery(){
 
         // And then create and display the chart
         updateChart();
-
 
     });
 }
@@ -143,6 +144,7 @@ function populateJobDataFromAdzuna(responsesToAdd) {
 
 function displayJobListings() {
     let jobRowEl = document.getElementById("job-row");
+    $(jobRowEl).find("tbody").empty();
     for(let i = 0; i < jobDataForChart.length; i++) {
         // Create a new listing by cloning the template variable
         let newListing = $(jobListingTemplate).clone();
@@ -171,26 +173,44 @@ function getCountOfProperties() {
     pushDataToChartVariables(propertyMapping);
 }
 
+
+// if the word is not included in the forbiddenWordsArray, push that word to the newArray
+function filterWordCount(unfilteredWords) {
+    var forbiddenWordsArray = ['<strong>','</strong>','and','to','in','a','...',' ','the','<strong>Developer</strong>','<strong>developer</strong>','&','-','=','as','then','this','be','.',',','/','\','[','],'on','our']
+    var filteredWords = []
+    for (i = 0; i < unfilteredWords.length; i++) {
+        if (!forbiddenWordsArray.includes(unfilteredWords[i])) {
+            filteredWords.push(unfilteredWords[i])
+          }
+       
+    }
+    return filteredWords;
+}   
+
+
 function getCountOfWords() {
-        // This combines the descriptions from each job listing (multiple strings) into one string
-        // Chambers, I changed this from looping thru response.results to jobDataForChart (jobDataForChart has all of the information we need after filtering duplicated) - Tyler
-        for(var i = 0; i < jobDataForChart.length; i++){
-            str = str + " " + jobDataForChart[i][property];
-            }
+    // This combines the descriptions from each job listing (multiple strings) into one string
+    // Chambers, I changed this from looping thru response.results to jobDataForChart (jobDataForChart has all of the information we need after filtering duplicated) - Tyler
+    for(var i = 0; i < jobDataForChart.length; i++){
+        str = str + " " + jobDataForChart[i][property];
+        }
     
-            // console.log(str.split(' '));
+     console.log(str.split(' '));
     
-            // Takes the string made from the for loop above and separates each word and its word count of 
-            //  each word and put them in their own array in the str array
-            let words = str.split(' ')
-            let count = {}
-            for(let word of words){
-                count[word] ? count[word]++ : count[word] = 1
-            }
     
-            // console.log(count);
-            pushDataToChartVariables(count);
+    // Takes the string made from the for loop above and separates each word and its word count of 
+    //  each word and put them in their own array in the str array
+    let unfilteredWords = str.split(' ')
+    let filteredWords = filterWordCount(unfilteredWords);
+    let count = {}
+    for(let word of filteredWords){
+        count[word] ? count[word]++ : count[word] = 1
+    }
+    
+    console.log(count);
+    pushDataToChartVariables(count);
 }
+
 
 function pushDataToChartVariables(objectToPush) {
     // This function will handle the pushing of data to the chart variables, and how many datasets it will display (topXResults).
@@ -228,15 +248,6 @@ function pushDataToChartVariables(objectToPush) {
         return topResults;
     }
 }
-
-//filter system
-// var allWords = [..this comes from the 3rd party API..];
-// var eligibleKeyWords = []; // a fresh array
-// var ineligibleKeyWords = ["and", "...", "the", "to", "for", ..... etc ];
-
-// for loop...
-//   if allWords[i] is NOT in ineligibleKeyWords array
-//     push to the new eligibleKeyWords array  
 
 //initializes select box
 $(document).ready(function(){
